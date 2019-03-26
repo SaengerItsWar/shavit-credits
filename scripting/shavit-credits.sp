@@ -38,7 +38,7 @@ public void OnPluginStart()
 	AutoExecConfig(true, "shavit-credits");
 	
 }
-public void OnMapStart()
+public void OnPluginStart()
 {
 	GetCurrentMap(gS_Map, 160);
 	GetMapDisplayName(gS_Map, gS_Map, 160);
