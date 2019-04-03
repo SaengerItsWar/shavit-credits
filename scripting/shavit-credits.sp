@@ -45,11 +45,6 @@ public void OnPluginStart()
 	iTier = Shavit_GetMapTier(gS_Map);		
 }
 
-public Action Shavit_OnStart(int client, int track)
-{
-	istyle = Shavit_GetBhopStyle(client);
-	fpb = Shavit_GetClientPB(client, istyle, track);
-}
 public void Shavit_OnStyleChanged(int client, int oldstyle, int newstyle, int track)
 {
 	istyle = newstyle;
