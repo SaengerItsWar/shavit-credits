@@ -58,7 +58,7 @@ public void Shavit_OnStyleChanged(int client, int oldstyle, int newstyle, int tr
 public void Shavit_OnFinish(int client, int style, float time, int jumps, int track)
 {
 	
-	if(gH_Enabled_normal)
+	if(gH_Enabled_normal == 1)
 	{
 		if(gH_Enabled_t1 == 0  && iTier == 1)
 		{
@@ -71,7 +71,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 			PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for finishing this map.", fcredits);
 		}
 	}
-	if(gH_Enabled_pb)
+	if(gH_Enabled_pb == 1)
 	{	
 			if(time<fpb){
 			
@@ -84,7 +84,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 }
 public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int track)
 {
-	if(gH_Enabled_wr)
+	if(gH_Enabled_wr == 1)
 	{
 			int fcredits = GetConVarInt(gH_Amount_wr)*iTier;
 	
