@@ -3,19 +3,22 @@
 #include <store>
 #include <shavit>
 #include <autoexecconfig>
+#include <multicolors>
+#pragma semicolon 1
+#pragma newdecls required
 
 #define PLUGIN_VERSION "1.3.0"
 public Plugin myinfo = 
 {
 	name = "[shavit] Credits | Zephyrus Store", 
-	author = "Farhannz, Modified by Saengerkrieg12", 
+	author = "Farhannz, Modified by Saengerkrieg12 and totenfluch", 
 	description = "Gives Zephyrus Store Credits on map finish and breaking records", 
 	version = PLUGIN_VERSION, 
 	url = "https://deadnationgaming.eu/"
 };
 
 ConVar g_cvNormalEnabled;
-int g_iNormalEnabled
+int g_iNormalEnabled;
 ConVar g_cvWREnabled;
 int g_iWREnabled;
 ConVar g_cvEnabledPb;
@@ -70,7 +73,7 @@ public void OnConfigsExecuted() {
 	g_iPBAmount = GetConVarInt(g_cvPBAmount);
 }
 
-public OnConVarChange(ConVar convar, const char[] oldValue, const char[] newValue) {
+public void OnConVarChange(ConVar convar, const char[] oldValue, const char[] newValue) {
 	g_iNormalEnabled = GetConVarInt(g_cvNormalEnabled);
 	g_iWREnabled = GetConVarInt(g_cvWREnabled);
 	g_iPBEnabled = GetConVarInt(g_cvEnabledPb);
@@ -81,8 +84,8 @@ public OnConVarChange(ConVar convar, const char[] oldValue, const char[] newValu
 }
 
 public void OnMapStart() {
-	GetCurrentMap(g_cMap, 160);
-	GetMapDisplayName(g_cMap, g_cMap, 160);
+	GetCurrentMap(g_cMap, sizeof(g_cMap[]));
+	GetMapDisplayName(g_cMap, g_cMap, sizeof(g_cMap[]));
 	g_iTier = Shavit_GetMapTier(g_cMap);
 }
 
@@ -97,7 +100,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 			int fcredits = GetConVarInt(g_cvNormalAmount) * g_iTier;
 			
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
-			PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for finishing this map.", fcredits);
+			CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for finishing this map.", fcredits);
 		}
 	}
 	
@@ -107,7 +110,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 			int fcredits = GetConVarInt(g_cvPBAmount) * g_iTier;
 			
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
-			PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for breaking your Personal Best.", fcredits);
+			CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking your Personal Best.", fcredits);
 		}
 	}
 	
@@ -117,6 +120,6 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 		int fcredits = GetConVarInt(g_cvWrAmount) * g_iTier;
 		
 		Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
-		PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for break the world records.", fcredits);
+		CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking the world records.", fcredits);
 	}
 }
