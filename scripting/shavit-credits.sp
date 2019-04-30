@@ -30,10 +30,10 @@ ConVar g_hPBAmount;
 int g_iPBAmount;
 
 
-char gS_Map[160];
-int iTier;
-int istyle;
-float fpb;
+char g_cMap[160];
+int g_iTier;
+int g_iStyle;
+float g_fPB;
 
 public void OnPluginStart() {
 	AutoExecConfig_SetFile("shavit_credits");
@@ -63,20 +63,20 @@ public void OnConfigsExecuted() {
 }
 
 public void OnMapStart() {
-	GetCurrentMap(gS_Map, 160);
-	GetMapDisplayName(gS_Map, gS_Map, 160);
-	iTier = Shavit_GetMapTier(gS_Map);
+	GetCurrentMap(g_cMap, 160);
+	GetMapDisplayName(g_cMap, g_cMap, 160);
+	g_iTier = Shavit_GetMapTier(g_cMap);
 }
 
 public Action Shavit_OnStart(int client, int track) {
-	istyle = Shavit_GetBhopStyle(client);
-	fpb = Shavit_GetClientPB(client, istyle, track);
+	g_iStyle = Shavit_GetBhopStyle(client);
+	g_fPB = Shavit_GetClientPB(client, g_iStyle, track);
 }
 
 public void Shavit_OnFinish(int client, int style, float time, int jumps, int track) {
 	if (g_iNormalEnabled == 1) {
-		if (g_iT1Enabled == 1 || iTier != 1) {
-			int fcredits = GetConVarInt(g_hNormalAmount) * iTier;
+		if (g_iT1Enabled == 1 || g_iTier != 1) {
+			int fcredits = GetConVarInt(g_hNormalAmount) * g_iTier;
 			
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
 			PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for finishing this map.", fcredits);
@@ -84,9 +84,9 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 	}
 	
 	if (g_iPBEnabled == 1) {
-		if (time < fpb) {
+		if (time < g_fPB) {
 			
-			int fcredits = GetConVarInt(g_hPBAmount) * iTier;
+			int fcredits = GetConVarInt(g_hPBAmount) * g_iTier;
 			
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
 			PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for breaking your Personal Best.", fcredits);
@@ -96,7 +96,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 }
 public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int track) {
 	if (g_iWREnabled == 1) {
-		int fcredits = GetConVarInt(g_hWrAmount) * iTier;
+		int fcredits = GetConVarInt(g_hWrAmount) * g_iTier;
 		
 		Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
 		PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for break the world records.", fcredits);
