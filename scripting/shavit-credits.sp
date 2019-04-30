@@ -47,12 +47,16 @@ public void OnPluginStart()
 	g_hPBAmount = CreateConVar("credits_amount_pb", "10", "Amount of credits are given on breaking your personal best.", 0, true, 1.0, false);
 	
 	AutoExecConfig(true, "shavit-credits");
-	
+}
+
+public void OnConfigsExecuted() {
 	g_iNormalEnabled = GetConVarInt(g_hNormalEnabled);
 	g_iWREnabled = GetConVarInt(g_hWREnabled);
 	g_iPBEnabled = GetConVarInt(g_hEnabledPb);
 	g_iT1Enabled = GetConVarInt(g_hT1Enabled);
-	
+	g_iNormalAmount = GetConVarInt(g_hNormalAmount);
+	g_iWrAmount = GetConVarInt(g_hWrAmount);
+	g_iPBAmount = GetConVarInt(g_hPBAmount);
 }
 
 public void OnMapStart()
