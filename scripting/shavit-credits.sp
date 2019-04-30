@@ -35,13 +35,11 @@ int iTier;
 int istyle;
 float fpb;
 
-public void OnPluginStart()
-{
-	
-	AutoExecConfig_SetFile("store_jackpot");
+public void OnPluginStart() {	
+	AutoExecConfig_SetFile("shavit_credits");
 	AutoExecConfig_SetCreateFile(true);
 	
-	CreateConVar("shavit_creds_version", PLUGIN_VERSION, "Zephyrus-Store : Shavit Credits Map Finish", FCVAR_SPONLY | FCVAR_DONTRECORD | FCVAR_NOTIFY);
+	CreateConVar("shavit_credits_version", PLUGIN_VERSION, "Zephyrus-Store : Shavit Credits Map Finish", FCVAR_SPONLY | FCVAR_DONTRECORD | FCVAR_NOTIFY);
 	g_hNormalEnabled = CreateConVar("credits_enable_normal", "1", "Store money give for map finish is enabled?", 0, true, 0.0, true, 1.0);
 	g_hWREnabled = CreateConVar("credits_enable_wr", "1", "Store money given for map World Record is enabled?", 0, true, 0.0, true, 1.0);
 	g_hEnabledPb = CreateConVar("credits_enable_pb", "1", "Store money given for map Personal Best is enabled?", 0, true, 0.0, true, 1.0);
