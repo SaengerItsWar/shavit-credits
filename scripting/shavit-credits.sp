@@ -2,6 +2,7 @@
 #include <sdktools>
 #include <store>
 #include <shavit>
+#include <autoexecconfig>
 
 #define PLUGIN_VERSION "1.2.2"
 public Plugin myinfo = 
@@ -37,6 +38,9 @@ float fpb;
 public void OnPluginStart()
 {
 	
+	AutoExecConfig_SetFile("store_jackpot");
+	AutoExecConfig_SetCreateFile(true);
+	
 	CreateConVar("shavit_creds_version", PLUGIN_VERSION, "Zephyrus-Store : Shavit Credits Map Finish", FCVAR_SPONLY | FCVAR_DONTRECORD | FCVAR_NOTIFY);
 	g_hNormalEnabled = CreateConVar("credits_enable_normal", "1", "Store money give for map finish is enabled?", 0, true, 0.0, true, 1.0);
 	g_hWREnabled = CreateConVar("credits_enable_wr", "1", "Store money given for map World Record is enabled?", 0, true, 0.0, true, 1.0);
@@ -46,7 +50,8 @@ public void OnPluginStart()
 	g_hWrAmount = CreateConVar("credits_amount_wr", "25", "Amount of credits are given on breaking world records.", 0, true, 1.0, false);
 	g_hPBAmount = CreateConVar("credits_amount_pb", "10", "Amount of credits are given on breaking your personal best.", 0, true, 1.0, false);
 	
-	AutoExecConfig(true, "shavit-credits");
+	AutoExecConfig_CleanFile();
+	AutoExecConfig_ExecuteFile();
 }
 
 public void OnConfigsExecuted() {
