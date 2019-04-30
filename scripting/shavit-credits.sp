@@ -7,10 +7,10 @@
 #define PLUGIN_VERSION "1.2.2"
 public Plugin myinfo = 
 {
-	name = "[shavit] Credits | Zephyrus Store",
-	author = "Farhannz, Modified by Saengerkrieg12",
-	description = "Gives Zephyrus Store Credits on map finish and breaking records",
-	version = PLUGIN_VERSION,
+	name = "[shavit] Credits | Zephyrus Store", 
+	author = "Farhannz, Modified by Saengerkrieg12", 
+	description = "Gives Zephyrus Store Credits on map finish and breaking records", 
+	version = PLUGIN_VERSION, 
 	url = "https://deadnationgaming.eu/"
 };
 
@@ -35,7 +35,7 @@ int iTier;
 int istyle;
 float fpb;
 
-public void OnPluginStart() {	
+public void OnPluginStart() {
 	AutoExecConfig_SetFile("shavit_credits");
 	AutoExecConfig_SetCreateFile(true);
 	
@@ -62,52 +62,43 @@ public void OnConfigsExecuted() {
 	g_iPBAmount = GetConVarInt(g_hPBAmount);
 }
 
-public void OnMapStart()
-{
+public void OnMapStart() {
 	GetCurrentMap(gS_Map, 160);
 	GetMapDisplayName(gS_Map, gS_Map, 160);
-	iTier = Shavit_GetMapTier(gS_Map);		
+	iTier = Shavit_GetMapTier(gS_Map);
 }
 
-public Action Shavit_OnStart(int client, int track)
-{
+public Action Shavit_OnStart(int client, int track) {
 	istyle = Shavit_GetBhopStyle(client);
 	fpb = Shavit_GetClientPB(client, istyle, track);
 }
 
-public void Shavit_OnFinish(int client, int style, float time, int jumps, int track)
-{
-	
-	if(g_iNormalEnabled == 1)
-	{
-		if(g_iT1Enabled == 1 || iTier != 1)
-		{
-			int fcredits = GetConVarInt(g_hNormalAmount)*iTier;
-	
+public void Shavit_OnFinish(int client, int style, float time, int jumps, int track) {
+	if (g_iNormalEnabled == 1) {
+		if (g_iT1Enabled == 1 || iTier != 1) {
+			int fcredits = GetConVarInt(g_hNormalAmount) * iTier;
+			
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
 			PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for finishing this map.", fcredits);
 		}
 	}
 	
-	if(g_iPBEnabled == 1)
-	{	
-			if(time<fpb){
+	if (g_iPBEnabled == 1) {
+		if (time < fpb) {
 			
-				int fcredits = GetConVarInt(g_hPBAmount)*iTier;
+			int fcredits = GetConVarInt(g_hPBAmount) * iTier;
 			
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
-				PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for breaking your Personal Best.", fcredits);
-			}
+			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
+			PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for breaking your Personal Best.", fcredits);
+		}
 	}
 	
 }
-public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int track)
-{
-	if(g_iWREnabled == 1)
-	{
-			int fcredits = GetConVarInt(g_hWrAmount)*iTier;
-	
-			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
-			PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for break the world records.", fcredits);
+public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int track) {
+	if (g_iWREnabled == 1) {
+		int fcredits = GetConVarInt(g_hWrAmount) * iTier;
+		
+		Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
+		PrintToChat(client, "[\x04Store\x01] You have earned \x04%d\x01 credits for break the world records.", fcredits);
 	}
 }
