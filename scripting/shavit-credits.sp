@@ -4,7 +4,7 @@
 #include <shavit>
 #include <autoexecconfig>
 
-#define PLUGIN_VERSION "1.2.2"
+#define PLUGIN_VERSION "1.3.0"
 public Plugin myinfo = 
 {
 	name = "[shavit] Credits | Zephyrus Store", 
@@ -29,7 +29,6 @@ int g_iWrAmount;
 ConVar g_cvPBAmount;
 int g_iPBAmount;
 
-
 char g_cMap[160];
 int g_iTier;
 int g_iStyle;
@@ -48,11 +47,30 @@ public void OnPluginStart() {
 	g_cvWrAmount = AutoExecConfig_CreateConVar("credits_amount_wr", "25", "Amount of credits are given on breaking world records.", 0, true, 1.0, false);
 	g_cvPBAmount = AutoExecConfig_CreateConVar("credits_amount_pb", "10", "Amount of credits are given on breaking your personal best.", 0, true, 1.0, false);
 	
+	HookConVarChange(g_cvNormalEnabled, OnConVarChange);
+	HookConVarChange(g_cvWREnabled, OnConVarChange);
+	HookConVarChange(g_cvEnabledPb, OnConVarChange);
+	HookConVarChange(g_cvT1Enabled, OnConVarChange);
+	HookConVarChange(g_cvNormalAmount, OnConVarChange);
+	HookConVarChange(g_cvWrAmount, OnConVarChange);
+	HookConVarChange(g_cvPBAmount, OnConVarChange);
+	
+	
 	AutoExecConfig_CleanFile();
 	AutoExecConfig_ExecuteFile();
 }
 
 public void OnConfigsExecuted() {
+	g_iNormalEnabled = GetConVarInt(g_cvNormalEnabled);
+	g_iWREnabled = GetConVarInt(g_cvWREnabled);
+	g_iPBEnabled = GetConVarInt(g_cvEnabledPb);
+	g_iT1Enabled = GetConVarInt(g_cvT1Enabled);
+	g_iNormalAmount = GetConVarInt(g_cvNormalAmount);
+	g_iWrAmount = GetConVarInt(g_cvWrAmount);
+	g_iPBAmount = GetConVarInt(g_cvPBAmount);
+}
+
+public OnConVarChange(ConVar convar, const char[] oldValue, const char[] newValue) {
 	g_iNormalEnabled = GetConVarInt(g_cvNormalEnabled);
 	g_iWREnabled = GetConVarInt(g_cvWREnabled);
 	g_iPBEnabled = GetConVarInt(g_cvEnabledPb);
