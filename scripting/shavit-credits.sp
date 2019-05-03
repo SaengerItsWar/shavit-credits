@@ -12,7 +12,7 @@ public Plugin myinfo =
 {
 	name = "[shavit] Credits | Zephyrus Store", 
 	author = "Farhannz, Modified by Saengerkrieg12 and totenfluch", 
-	description = "Gives Zephyrus Store Credits on map finish and breaking records", 
+	description = "Gives Zephyrus Store Credits for records", 
 	version = PLUGIN_VERSION, 
 	url = "https://deadnationgaming.eu/"
 };
@@ -41,14 +41,14 @@ public void OnPluginStart() {
 	AutoExecConfig_SetFile("shavit_credits");
 	AutoExecConfig_SetCreateFile(true);
 	
-	CreateConVar("shavit_credits_version", PLUGIN_VERSION, "Zephyrus-Store : Shavit Credits Map Finish", FCVAR_SPONLY | FCVAR_DONTRECORD | FCVAR_NOTIFY);
-	g_cvNormalEnabled = AutoExecConfig_CreateConVar("credits_enable_normal", "1", "Store money give for map finish is enabled?", 0, true, 0.0, true, 1.0);
-	g_cvWREnabled = AutoExecConfig_CreateConVar("credits_enable_wr", "1", "Store money given for map World Record is enabled?", 0, true, 0.0, true, 1.0);
-	g_cvEnabledPb = AutoExecConfig_CreateConVar("credits_enable_pb", "1", "Store money given for map Personal Best is enabled?", 0, true, 0.0, true, 1.0);
-	g_cvT1Enabled = AutoExecConfig_CreateConVar("credits_enable_t1", "1", "Enable/Disable give credits for Tier 1 Has no effect on WRs and PBs!", 0, true, 0.0, true, 1.0);
-	g_cvNormalAmount = AutoExecConfig_CreateConVar("credits_amount_normal", "10", "Amount of credits are given on map finish.", 0, true, 1.0, false);
-	g_cvWrAmount = AutoExecConfig_CreateConVar("credits_amount_wr", "25", "Amount of credits are given on breaking world records.", 0, true, 1.0, false);
-	g_cvPBAmount = AutoExecConfig_CreateConVar("credits_amount_pb", "10", "Amount of credits are given on breaking your personal best.", 0, true, 1.0, false);
+	CreateConVar("shavit_credits_version", PLUGIN_VERSION, "Zephyrus-Store : Shavit Credits for records", FCVAR_SPONLY | FCVAR_DONTRECORD | FCVAR_NOTIFY);
+	g_cvNormalEnabled = AutoExecConfig_CreateConVar("credits_enable_normal", "1", "Enable Store credits given for finishing a map?", 0, true, 0.0, true, 1.0);
+	g_cvWREnabled = AutoExecConfig_CreateConVar("credits_enable_wr", "1", "Enable Store credits given for greaking the map Record?", 0, true, 0.0, true, 1.0);
+	g_cvEnabledPb = AutoExecConfig_CreateConVar("credits_enable_pb", "1", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
+	g_cvT1Enabled = AutoExecConfig_CreateConVar("credits_enable_t1", "1", "Enable/Disable given credits for Tier 1. This has no effect on WRs and PBs!", 0, true, 0.0, true, 1.0);
+	g_cvNormalAmount = AutoExecConfig_CreateConVar("credits_amount_normal", "10", "How many points should be given for finishing a Map?(will be claculated per Tier(amount_normal*Tier))", 0, true, 1.0, false);
+	g_cvWrAmount = AutoExecConfig_CreateConVar("credits_amount_wr", "25", "How many points should be given for breaking a Map record?(will be calculated per Tier(amount_wr*Tier))", 0, true, 1.0, false);
+	g_cvPBAmount = AutoExecConfig_CreateConVar("credits_amount_pb", "10", "How many point should be given for breaking the own Personal Best?(will be calculated per Tier(amount_pb*Tier))", 0, true, 1.0, false);
 	
 	HookConVarChange(g_cvNormalEnabled, OnConVarChange);
 	HookConVarChange(g_cvWREnabled, OnConVarChange);
@@ -97,7 +97,7 @@ public Action Shavit_OnStart(int client, int track) {
 public void Shavit_OnFinish(int client, int style, float time, int jumps, int track) {
 	if (g_iNormalEnabled == 1) {
 		if (g_iT1Enabled == 1 || g_iTier != 1) {
-			int fcredits = GetConVarInt(g_cvNormalAmount) * g_iTier;
+			int fcredits = g_iNormalAmount * g_iTier;
 			
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
 			CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for finishing this map.", fcredits);
@@ -107,7 +107,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 	if (g_iPBEnabled == 1) {
 		if (time < g_fPB) {
 			
-			int fcredits = GetConVarInt(g_cvPBAmount) * g_iTier;
+			int fcredits = g_iPBAmount * g_iTier;
 			
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
 			CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking your Personal Best.", fcredits);
@@ -117,7 +117,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 }
 public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int track) {
 	if (g_iWREnabled == 1) {
-		int fcredits = GetConVarInt(g_cvWrAmount) * g_iTier;
+		int fcredits = g_iWrAmount * g_iTier;
 		
 		Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits);
 		CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking the world records.", fcredits);
