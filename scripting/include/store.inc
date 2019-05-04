@@ -21,11 +21,9 @@ enum Item_Plan
 
 enum Store_Item
 {
-	String:szName[ITEM_NAME_LENGTH],
 	String:szUniqueId[PLATFORM_MAX_PATH],
 	String:szShortcut[64],
 	iId,
-	iPrice,
 	iParent,
 	iHandler,
 	iFlagBits,
@@ -52,7 +50,6 @@ enum Type_Handler
 
 enum Client_Item
 {
-	iId,
 	iUniqueId,
 	bool:bSynced,
 	bool:bDeleted,
