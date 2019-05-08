@@ -12,7 +12,7 @@ public Plugin myinfo =
 {
 	name = "[shavit] Credits | Zephyrus Store", 
 	author = "Farhannz, Modified by Saengerkrieg12 and totenfluch", 
-	description = "Gives Zephyrus Store Credits on map finish and breaking records", 
+	description = "Gives Zephyrus Store Credits for records", 
 	version = PLUGIN_VERSION, 
 	url = "https://deadnationgaming.eu/"
 };
@@ -85,8 +85,8 @@ public void OnConVarChange(ConVar convar, const char[] oldValue, const char[] ne
 }
 
 public void OnMapStart() {
-	GetCurrentMap(g_cMap, sizeof(g_cMap[]));
-	GetMapDisplayName(g_cMap, g_cMap, sizeof(g_cMap[]));
+	GetCurrentMap(g_cMap, sizeof(g_cMap));
+	GetMapDisplayName(g_cMap, g_cMap, sizeof(g_cMap));
 	g_iTier = Shavit_GetMapTier(g_cMap);
 }
 
@@ -121,6 +121,6 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 		int fcredits = g_iWrAmount * g_iTier;
 		
 		Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "[Shavit] Credits for breaking a map record");
-		CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking the world records.", fcredits);
+		CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking the WR.", fcredits);
 	}
 }
