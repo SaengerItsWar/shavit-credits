@@ -41,8 +41,8 @@ ConVar g_cvNormalBAmount;
 int g_iNormalBAmount;
 ConVar g_cvWrBAmount;
 int g_iWrBAmount;
-ConVar g_cvPBBAmount;
-int g_iPBBAmount;
+ConVar g_cvBPbAmount;
+int g_iBPbAmount;
 
 char g_cMap[160];
 int g_iTier;
@@ -67,7 +67,7 @@ public void OnPluginStart()
 	g_cvEnabledBPb = AutoExecConfig_CreateConVar("credits_enable_pb_bonus", "0", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
 	g_cvNormalBAmount = AutoExecConfig_CreateConVar("credits_amount_normal_bonus", "10", "How many points should be given for finishing a Map?", 0, true, 1.0, false);
 	g_cvWrBAmount = AutoExecConfig_CreateConVar("credits_amount_wr_bonus", "25", "How many points should be given for breaking a Map record?", 0, true, 1.0, false);
-	g_cvPBBAmount = AutoExecConfig_CreateConVar("credits_amount_pb_bonus", "10", "How many point should be given for breaking the own Personal Best?", 0, true, 1.0, false);
+	g_cvBPbAmount = AutoExecConfig_CreateConVar("credits_amount_pb_bonus", "10", "How many point should be given for breaking the own Personal Best?", 0, true, 1.0, false);
 	
 	HookConVarChange(g_cvNormalEnabled, OnConVarChange);
 	HookConVarChange(g_cvWREnabled, OnConVarChange);
@@ -81,7 +81,7 @@ public void OnPluginStart()
 	HookConVarChange(g_cvEnabledBPb, OnConVarChange);
 	HookConVarChange(g_cvNormalBAmount, OnConVarChange);
 	HookConVarChange(g_cvWrBAmount, OnConVarChange);
-	HookConVarChange(g_cvPBBAmount, OnConVarChange);
+	HookConVarChange(g_cvBPbAmount, OnConVarChange);
 	
 	
 	AutoExecConfig_CleanFile();
@@ -101,7 +101,7 @@ public void OnConfigsExecuted() {
 	g_iBPBEnabled = GetConVarInt(g_cvEnabledBPb);
 	g_iNormalBAmount = GetConVarInt(g_cvNormalBAmount);
 	g_iWrBAmount = GetConVarInt(g_cvWrBAmount);
-	g_iPBBAmount = GetConVarInt(g_cvPBBAmount);
+	g_iBPbAmount = GetConVarInt(g_cvBPbAmount);
 }
 
 public void OnConVarChange(ConVar convar, const char[] oldValue, const char[] newValue) {
@@ -117,7 +117,7 @@ public void OnConVarChange(ConVar convar, const char[] oldValue, const char[] ne
 	g_iBPBEnabled = GetConVarInt(g_cvEnabledBPb);
 	g_iNormalBAmount = GetConVarInt(g_cvNormalBAmount);
 	g_iWrBAmount = GetConVarInt(g_cvWrBAmount);
-	g_iPBBAmount = GetConVarInt(g_cvPBBAmount);
+	g_iBPbAmount = GetConVarInt(g_cvBPbAmount);
 }
 
 public void OnMapStart() {
@@ -131,7 +131,7 @@ public Action Shavit_OnStart(int client, int track) {
 	g_fPB = Shavit_GetClientPB(client, g_iStyle, track);
 }
 
-public void Shavit_OnFinish(int client, int style, float time, int jumps, int track) {
+public void Shavit_OnFinish(int client, int style, float time, int jumps, int strafes, float sync, int track) {
 	if (g_iNormalEnabled == 1) {
 		if (g_iT1Enabled == 1 || g_iTier != 1) {
 			
@@ -145,7 +145,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 			else if(g_iBNormalEnabled == 1){
 				int fcredits = g_iNormalBAmount;
 			
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "finishing a map Bonus.");
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "finishing map Bonus.");
 				CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for finishing the Bonus of this map.", fcredits);
 			}
 		}
@@ -162,7 +162,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 			}
 			
 			else if(g_iBPBEnabled == 1){
-				int fcredits = g_iPBBAmount;
+				int fcredits = g_iBPbAmount;
 			
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "Bonus Personal Best.");
 				CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking your bonus Personal Best.", fcredits);
@@ -173,7 +173,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 	}
 	
 }
-public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int track) {
+public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int strafes, float sync, int track) {
 	if (g_iWREnabled == 1) {
 		if(track == 0){
 			int fcredits = g_iWrAmount * g_iTier;
