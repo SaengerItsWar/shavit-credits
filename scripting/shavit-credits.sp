@@ -138,14 +138,14 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 			if(track == 0){
 				int fcredits = g_iNormalAmount * g_iTier;
 			
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "[shavit] Credits for finishing a map");
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "finishing map");
 				CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for finishing this map.", fcredits);
 			}
 			
 			else if(g_iBNormalEnabled == 1){
 				int fcredits = g_iNormalBAmount;
 			
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "[Shavit] Credits for finishing a map Bonus.");
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "finishing a map Bonus.");
 				CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for finishing the Bonus of this map.", fcredits);
 			}
 		}
@@ -157,14 +157,14 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int tr
 			if(track == 0){
 				int fcredits = g_iPBAmount * g_iTier;
 			
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "[Shavit] Credits for breaking the own Personal Best");
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "Personal Best");
 				CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking your Personal Best.", fcredits);
 			}
 			
 			else if(g_iBPBEnabled == 1){
 				int fcredits = g_iPBBAmount;
 			
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "[Shavit] Credits for breaking the own Bonus Personal Best.");
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "Bonus Personal Best.");
 				CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking your bonus Personal Best.", fcredits);
 			}
 			
@@ -178,14 +178,14 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 		if(track == 0){
 			int fcredits = g_iWrAmount * g_iTier;
 		
-			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "[Shavit] Credits for breaking a map record");
+			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "breaking map record");
 			CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking the WR.", fcredits);
 		}
 		
 		else if(g_iBWREnabled == 1){
 			int fcredits = g_iWrBAmount;
 		
-			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "[Shavit] Credits for breaking a Bonus map record");
+			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "breaking Bonus record");
 			CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking the Bonus WR.", fcredits);
 		}
 	}
