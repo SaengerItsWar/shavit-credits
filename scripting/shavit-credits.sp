@@ -7,7 +7,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.3.2"
+#define PLUGIN_VERSION "1.3.3"
 public Plugin myinfo = 
 {
 	name = "[shavit] Credits | Kxnrl Store", 
@@ -133,6 +133,7 @@ public Action Shavit_OnStart(int client, int track) {
 
 public void Shavit_OnFinish(int client, int style, float time, int jumps, int strafes, float sync, int track) {
 	
+	//thx to Nairda#2748 and KiD Fearless#9205 on discord
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 
@@ -182,6 +183,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 }
 public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int strafes, float sync, int track) {
 	
+	//thx to Nairda#2748 and KiD Fearless#9205 on discord
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 
