@@ -7,7 +7,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.3.2"
+#define PLUGIN_VERSION "1.3.3"
 public Plugin myinfo = 
 {
 	name = "[shavit] Credits | Zephyrus Store", 
