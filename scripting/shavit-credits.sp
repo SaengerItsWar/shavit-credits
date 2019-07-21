@@ -132,6 +132,14 @@ public Action Shavit_OnStart(int client, int track) {
 }
 
 public void Shavit_OnFinish(int client, int style, float time, int jumps, int strafes, float sync, int track) {
+	
+	//thx to Nairda#2748 and KiD Fearless#9205 on discord
+	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
+	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
+
+	if (StrContains(sStyleSpecialString, "segments") != -1)
+    		return;
+		
 	if (g_iNormalEnabled == 1) {
 		if (g_iT1Enabled == 1 || g_iTier != 1) {
 			
@@ -174,6 +182,14 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	
 }
 public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int strafes, float sync, int track) {
+	
+	//thx to Nairda#2748 and KiD Fearless#9205 on discord
+	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
+	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
+
+	if (StrContains(sStyleSpecialString, "segments") != -1)
+    		return;
+		
 	if (g_iWREnabled == 1) {
 		if(track == 0){
 			int fcredits = g_iWrAmount * g_iTier;
