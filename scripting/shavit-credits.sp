@@ -11,7 +11,7 @@ chatstrings_t gS_ChatStrings;
 public Plugin myinfo = 
 {
 	name = "[shavit] Credits | Kxnrl Store", 
-	author = "Farhannz, Modified by Saengerkrieg12 and totenfluch", 
+	author = "Farhannz, Modified by SaengerItsWar and totenfluch", 
 	description = "Gives Kxnrl Store Credits for records", 
 	version = PLUGIN_VERSION, 
 	url = "https://deadnationgaming.eu/"
