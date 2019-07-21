@@ -3,11 +3,11 @@
 #include <store>
 #include <shavit>
 #include <autoexecconfig>
-#include <multicolors>
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.3.3"
+#define PLUGIN_VERSION "1.3.4"
+chatstrings_t gS_ChatStrings;
 public Plugin myinfo = 
 {
 	name = "[shavit] Credits | Kxnrl Store", 
@@ -126,6 +126,16 @@ public void OnMapStart() {
 	g_iTier = Shavit_GetMapTier(g_cMap);
 }
 
+public void Shavit_OnChatConfigLoaded()
+{
+	Shavit_GetChatStrings(sMessagePrefix, gS_ChatStrings.sPrefix, sizeof(chatstrings_t::sPrefix));
+	Shavit_GetChatStrings(sMessageText, gS_ChatStrings.sText, sizeof(chatstrings_t::sText));
+	Shavit_GetChatStrings(sMessageWarning, gS_ChatStrings.sWarning, sizeof(chatstrings_t::sWarning));
+	Shavit_GetChatStrings(sMessageVariable, gS_ChatStrings.sVariable, sizeof(chatstrings_t::sVariable));
+	Shavit_GetChatStrings(sMessageVariable2, gS_ChatStrings.sVariable2, sizeof(chatstrings_t::sVariable2));
+	Shavit_GetChatStrings(sMessageStyle, gS_ChatStrings.sStyle, sizeof(chatstrings_t::sStyle));
+}
+
 public Action Shavit_OnStart(int client, int track) {
 	g_iStyle = Shavit_GetBhopStyle(client);
 	g_fPB = Shavit_GetClientPB(client, g_iStyle, track);
@@ -133,7 +143,6 @@ public Action Shavit_OnStart(int client, int track) {
 
 public void Shavit_OnFinish(int client, int style, float time, int jumps, int strafes, float sync, int track) {
 	
-	//thx to Nairda#2748 and KiD Fearless#9205 on discord
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 
@@ -144,17 +153,17 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 		if (g_iT1Enabled == 1 || g_iTier != 1) {
 			
 			if(track == 0){
-				int fcredits = g_iNormalAmount * g_iTier;
+				int iCredits = g_iNormalAmount * g_iTier;
 			
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "finishing map");
-				CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for finishing this map.", fcredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map");
+				Shavit_PrintToChat(client, " You have earned %s%d%s credits for finishing this map.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 			
 			else if(g_iBNormalEnabled == 1){
-				int fcredits = g_iNormalBAmount;
+				int iCredits = g_iNormalBAmount;
 			
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "finishing map Bonus.");
-				CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for finishing the Bonus of this map.", fcredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map Bonus.");
+				Shavit_PrintToChat(client, "You have earned %s%d%s credits for finishing the Bonus of this map.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 		}
 		
@@ -163,17 +172,17 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	if (g_iPBEnabled == 1) {
 		if (time < g_fPB) {
 			if(track == 0){
-				int fcredits = g_iPBAmount * g_iTier;
+				int iCredits = g_iPBAmount * g_iTier;
 			
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "Personal Best");
-				CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking your Personal Best.", fcredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Personal Best");
+				Shavit_PrintToChat(client, "You have earned %s%d%s credits for breaking your Personal Best.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 			
 			else if(g_iBPBEnabled == 1){
-				int fcredits = g_iBPbAmount;
+				int iCredits = g_iBPbAmount;
 			
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "Bonus Personal Best.");
-				CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking your bonus Personal Best.", fcredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Bonus Personal Best.");
+				Shavit_PrintToChat(client, "You have earned %s%d%s credits for breaking your bonus Personal Best.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 			
 			
@@ -183,7 +192,6 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 }
 public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int strafes, float sync, int track) {
 	
-	//thx to Nairda#2748 and KiD Fearless#9205 on discord
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 
@@ -192,17 +200,17 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 		
 	if (g_iWREnabled == 1) {
 		if(track == 0){
-			int fcredits = g_iWrAmount * g_iTier;
+			int iCredits = g_iWrAmount * g_iTier;
 		
-			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "breaking map record");
-			CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking the WR.", fcredits);
+			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking map record");
+			Shavit_PrintToChat(client, "You have earned %s%d%s credits for breaking the WR.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
 		
 		else if(g_iBWREnabled == 1){
-			int fcredits = g_iWrBAmount;
+			int iCredits = g_iWrBAmount;
 		
-			Store_SetClientCredits(client, Store_GetClientCredits(client) + fcredits, "breaking Bonus record");
-			CPrintToChat(client, "[{green}Store{default}] You have earned {green}%d{default} credits for breaking the Bonus WR.", fcredits);
+			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking Bonus record");
+			Shavit_PrintToChat(client, "You have earned %s%d%s credits for breaking the Bonus WR.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
 	}
 }
