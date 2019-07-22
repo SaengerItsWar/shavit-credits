@@ -3,7 +3,7 @@
 	"NormalFinish"
 	{
 		"#format"	"{1:s}{2:d}{3:s}"
-		"en"	"You have earned {1}{2}{3} credits for finishing this map.
+		"en"	"You have earned {1}{2}{3} credits for finishing this map."
 	}
 	"NormalBonusFinish"
 	{
