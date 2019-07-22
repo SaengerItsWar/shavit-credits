@@ -51,10 +51,11 @@ float g_fPB;
 
 public void OnPluginStart()
 {
+	LoadTranslations("shavit-credits.phrases");
 	
 	AutoExecConfig_SetFile("shavit-credits");
 	AutoExecConfig_SetCreateFile(true);
-	CreateConVar("shavit_credtis_version", PLUGIN_VERSION, "Kxnrl-Store : Shavit Credits for records", FCVAR_SPONLY | FCVAR_DONTRECORD | FCVAR_NOTIFY);
+	CreateConVar("shavit_credtis_version", PLUGIN_VERSION, "Zephyrus-Store : Shavit Credits for records", FCVAR_SPONLY | FCVAR_DONTRECORD | FCVAR_NOTIFY);
 	g_cvNormalEnabled = AutoExecConfig_CreateConVar("credits_enable_normal", "1", "Enable Store credits given for finishing a map?", 0, true, 0.0, true, 1.0);
 	g_cvWREnabled = AutoExecConfig_CreateConVar("credits_enable_wr", "1", "Enable Store credits given for greaking the map Record?", 0, true, 0.0, true, 1.0);
 	g_cvEnabledPb = AutoExecConfig_CreateConVar("credits_enable_pb", "1", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
@@ -68,6 +69,7 @@ public void OnPluginStart()
 	g_cvNormalBAmount = AutoExecConfig_CreateConVar("credits_amount_normal_bonus", "10", "How many points should be given for finishing a Map?", 0, true, 1.0, false);
 	g_cvWrBAmount = AutoExecConfig_CreateConVar("credits_amount_wr_bonus", "25", "How many points should be given for breaking a Map record?", 0, true, 1.0, false);
 	g_cvBPbAmount = AutoExecConfig_CreateConVar("credits_amount_pb_bonus", "10", "How many point should be given for breaking the own Personal Best?", 0, true, 1.0, false);
+	
 	
 	HookConVarChange(g_cvNormalEnabled, OnConVarChange);
 	HookConVarChange(g_cvWREnabled, OnConVarChange);
@@ -156,33 +158,33 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				int iCredits = g_iNormalAmount * g_iTier;
 			
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
-				Shavit_PrintToChat(client, "You have earned %s%d%s credits for finishing this map.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
+				Shavit_PrintToChat(client, "%T", "NormalFinish", client, gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 			
 			else if(g_iBNormalEnabled == 1){
 				int iCredits = g_iNormalBAmount;
 			
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
-				Shavit_PrintToChat(client, "You have earned %s%d%s credits for finishing the Bonus of this map.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
+				Shavit_PrintToChat(client, "%T", "NormalBonusFinish", client, gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 		}
 		
 	}
 	
 	if (g_iPBEnabled == 1) {
-		if (time < g_fPB) {
+		if (time <= g_fPB) {
 			if(track == 0){
 				int iCredits = g_iPBAmount * g_iTier;
 			
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
-				Shavit_PrintToChat(client, "You have earned %s%d%s credits for breaking your Personal Best.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
+				Shavit_PrintToChat(client, "%T", "PersonalBest",client, gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 			
 			else if(g_iBPBEnabled == 1){
 				int iCredits = g_iBPbAmount;
 			
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
-				Shavit_PrintToChat(client, "You have earned %s%d%s credits for breaking your bonus Personal Best.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
+				Shavit_PrintToChat(client, "%T", "BonusPersonalBest", client, gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 			
 			
@@ -203,14 +205,14 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 			int iCredits = g_iWrAmount * g_iTier;
 		
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
-			Shavit_PrintToChat(client, "You have earned %s%d%s credits for breaking the WR.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
+			Shavit_PrintToChat(client, "%T", "WorldRecord", client, gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
 		
 		else if(g_iBWREnabled == 1){
 			int iCredits = g_iWrBAmount;
 		
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
-			Shavit_PrintToChat(client, "You have earned %s%d%s credits for breaking the Bonus WR.", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
+			Shavit_PrintToChat(client, "%T", "BonusWorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
 	}
 }
