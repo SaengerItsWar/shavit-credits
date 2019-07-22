@@ -10,9 +10,9 @@
 chatstrings_t gS_ChatStrings;
 public Plugin myinfo = 
 {
-	name = "[shavit] Credits | Kxnrl Store", 
+	name = "[shavit] Credits | Zephyrus Store", 
 	author = "Farhannz, Modified by SaengerItsWar and totenfluch", 
-	description = "Gives Kxnrl Store Credits for records", 
+	description = "Gives Zephyrus Store Credits for records", 
 	version = PLUGIN_VERSION, 
 	url = "https://deadnationgaming.eu/"
 };
