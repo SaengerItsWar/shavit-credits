@@ -48,6 +48,7 @@ char g_cMap[160];
 int g_iTier;
 int g_iStyle;
 float g_fPB;
+float fRankingMultiplier;
 
 public void OnPluginStart()
 {
@@ -154,8 +155,8 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	if (g_iNormalEnabled == 1) {
 		if (g_iT1Enabled == 1 || g_iTier != 1) {
 			
-			if(track == 0){
-				int iCredits = g_iNormalAmount * g_iTier;
+			if(track == 0) {
+				int iCredits = (g_iNormalAmount * g_iTier) * fRankingMultiplier;
 			
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
 				Shavit_PrintToChat(client, "%T", "NormalFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
@@ -173,8 +174,8 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	
 	if (g_iPBEnabled == 1) {
 		if (time <= g_fPB) {
-			if(track == 0){
-				int iCredits = g_iPBAmount * g_iTier;
+			if(track == 0) {
+				int iCredits = (g_iPBAmount * g_iTier) * fRankingMultiplier;
 			
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
 				Shavit_PrintToChat(client, "%T", "PersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
@@ -201,8 +202,8 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
     		return;
 		
 	if (g_iWREnabled == 1) {
-		if(track == 0){
-			int iCredits = g_iWrAmount * g_iTier;
+		if(track == 0) {
+			int iCredits = (g_iWrAmount * g_iTier) * fRankingMultiplier;
 		
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
 			Shavit_PrintToChat(client, "%T", "WorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
