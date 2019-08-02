@@ -49,6 +49,14 @@ int g_iTier;
 int g_iStyle;
 float g_fPB;
 
+public void OnAllPluginsLoaded()
+{
+	if(!LibraryExists("store_zephyrus"))
+	{
+		SetFailState("store_zephyrus is required for the plugin to work.");
+	}
+}
+
 public void OnPluginStart()
 {
 	LoadTranslations("shavit-credits.phrases");
@@ -87,7 +95,7 @@ public void OnPluginStart()
 	
 	
 	AutoExecConfig_CleanFile();
-	AutoExecConfig_ExecuteFile();
+	AutoExecConfig_ExecuteFile();	
 }
 
 public void OnConfigsExecuted() {
