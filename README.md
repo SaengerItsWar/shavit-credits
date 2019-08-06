@@ -7,6 +7,6 @@ You are Currently at the Zephyrus Version
 
 [Zephyrus Store Download](https://forums.alliedmods.net/showthread.php?t=276677)
 
-[kxnrl Store Version](https://github.com/SaengerItsWar/shavit-credits/tree/kxnrl) 
+(**CSGO**)[kxnrl Store Version](https://github.com/SaengerItsWar/shavit-credits/tree/kxnrl) 
 
-[kxnrl Store Download](https://build.kxnrl.com/Store/)
+(**CSGO**)[kxnrl Store Download](https://build.kxnrl.com/Store/)
