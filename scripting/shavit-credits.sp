@@ -51,6 +51,7 @@ float g_fPB;
 
 public void OnPluginStart()
 {
+	LoadTranslations("shavit-credits.phrases");
 	
 	AutoExecConfig_SetFile("shavit-credits");
 	AutoExecConfig_SetCreateFile(true);
