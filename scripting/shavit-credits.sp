@@ -170,7 +170,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	}
 	
 	if (g_iPBEnabled == 1) {
-		if (time < g_fPB) {
+		if (g_fPB > time) {
 			if(track == 0){
 				int iCredits = g_iPBAmount * g_iTier;
 			
