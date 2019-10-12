@@ -2,7 +2,7 @@
 #include <sdktools>
 #include <store>
 #include <shavit>
-#include <autoexecconfig>
+#include <convar_class>
 #pragma semicolon 1
 #pragma newdecls required
 
@@ -13,26 +13,26 @@ stylesettings_t gA_StyleSettings[STYLE_LIMIT];
 public Plugin myinfo = 
 {
 	name = "[shavit] Credits | Zephyrus Store", 
-	author = "Farhannz, Modified by SaengerItsWar and totenfluch", 
+	author = "SaengerItsWar", 
 	description = "Gives Zephyrus Store Credits for records", 
 	version = PLUGIN_VERSION, 
 	url = "https://deadnationgaming.eu/"
 }
 
 // convars
-ConVar g_cvNormalEnabled;
-ConVar g_cvWREnabled;
-ConVar g_cvEnabledPb;
-ConVar g_cvT1Enabled;
-ConVar g_cvNormalAmount;
-ConVar g_cvWrAmount;
-ConVar g_cvPBAmount;
-ConVar g_cvBNormalEnabled;
-ConVar g_cvBWREnabled;
-ConVar g_cvEnabledBPb;
-ConVar g_cvNormalBAmount;
-ConVar g_cvWrBAmount;
-ConVar g_cvBPbAmount;
+Convar g_cvNormalEnabled;
+Convar g_cvWREnabled;
+Convar g_cvEnabledPb;
+Convar g_cvT1Enabled;
+Convar g_cvNormalAmount;
+Convar g_cvWrAmount;
+Convar g_cvPBAmount;
+Convar g_cvBNormalEnabled;
+Convar g_cvBWREnabled;
+Convar g_cvEnabledBPb;
+Convar g_cvNormalBAmount;
+Convar g_cvWrBAmount;
+Convar g_cvBPbAmount;
 
 //globals
 char g_cMap[160];
@@ -51,26 +51,23 @@ public void OnAllPluginsLoaded()
 public void OnPluginStart()
 {
 	LoadTranslations("shavit-credits.phrases");
-	AutoExecConfig_SetFile("shavit-credits");
-	AutoExecConfig_SetCreateFile(true);
 	CreateConVar("shavit_credtis_version", PLUGIN_VERSION, "Zephyrus-Store : Shavit Credits for records", FCVAR_SPONLY | FCVAR_DONTRECORD | FCVAR_NOTIFY);
-	g_cvNormalEnabled = AutoExecConfig_CreateConVar("credits_enable_normal", "1", "Enable Store credits given for finishing a map?", 0, true, 0.0, true, 1.0);
-	g_cvWREnabled = AutoExecConfig_CreateConVar("credits_enable_wr", "1", "Enable Store credits given for greaking the map Record?", 0, true, 0.0, true, 1.0);
-	g_cvEnabledPb = AutoExecConfig_CreateConVar("credits_enable_pb", "1", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
-	g_cvT1Enabled = AutoExecConfig_CreateConVar("credits_enable_t1", "0", "Enable/Disable given credits for Tier 1. This has no effect on WRs and PBs!", 0, true, 0.0, true, 1.0);
-	g_cvNormalAmount = AutoExecConfig_CreateConVar("credits_amount_normal", "10.0", "How many points should be given for finishing a Map?(will be claculated per Tier(amount_normal*Tier))", 0, true, 1.0, false);
-	g_cvWrAmount = AutoExecConfig_CreateConVar("credits_amount_wr", "25.0", "How many points should be given for breaking a Map record?(will be calculated per Tier(amount_wr*Tier))", 0, true, 1.0, false);
-	g_cvPBAmount = AutoExecConfig_CreateConVar("credits_amount_pb", "10.0", "How many point should be given for breaking the own Personal Best?(will be calculated per Tier(amount_pb*Tier))", 0, true, 1.0, false);
-	g_cvBNormalEnabled = AutoExecConfig_CreateConVar("credits_enable_normal_bonus", "0", "Enable Store credits given for finishing a map?", 0, true, 0.0, true, 1.0);
-	g_cvBWREnabled = AutoExecConfig_CreateConVar("credits_enable_wr_bonus", "0", "Enable Store credits given for greaking the map Record?", 0, true, 0.0, true, 1.0);
-	g_cvEnabledBPb = AutoExecConfig_CreateConVar("credits_enable_pb_bonus", "0", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
-	g_cvNormalBAmount = AutoExecConfig_CreateConVar("credits_amount_normal_bonus", "10.0", "How many points should be given for finishing a Map?", 0, true, 1.0, false);
-	g_cvWrBAmount = AutoExecConfig_CreateConVar("credits_amount_wr_bonus", "25.0", "How many points should be given for breaking a Map record?", 0, true, 1.0, false);
-	g_cvBPbAmount = AutoExecConfig_CreateConVar("credits_amount_pb_bonus", "10.0", "How many point should be given for breaking the own Personal Best?", 0, true, 1.0, false);
+	g_cvNormalEnabled = new Convar("credits_enable_normal", "1", "Enable Store credits given for finishing a map?", 0, true, 0.0, true, 1.0);
+	g_cvWREnabled = new Convar("credits_enable_wr", "1", "Enable Store credits given for greaking the map Record?", 0, true, 0.0, true, 1.0);
+	g_cvEnabledPb = new Convar("credits_enable_pb", "1", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
+	g_cvT1Enabled = new Convar("credits_enable_t1", "0", "Enable/Disable given credits for Tier 1. This has no effect on WRs and PBs!", 0, true, 0.0, true, 1.0);
+	g_cvNormalAmount = new Convar("credits_amount_normal", "10.0", "How many points should be given for finishing a Map?(will be claculated per Tier(amount_normal*Tier))", 0, true, 1.0, false);
+	g_cvWrAmount = new Convar("credits_amount_wr", "25.0", "How many points should be given for breaking a Map record?(will be calculated per Tier(amount_wr*Tier))", 0, true, 1.0, false);
+	g_cvPBAmount = new Convar("credits_amount_pb", "10.0", "How many point should be given for breaking the own Personal Best?(will be calculated per Tier(amount_pb*Tier))", 0, true, 1.0, false);
+	g_cvBNormalEnabled = new Convar("credits_enable_normal_bonus", "0", "Enable Store credits given for finishing a map?", 0, true, 0.0, true, 1.0);
+	g_cvBWREnabled = new Convar("credits_enable_wr_bonus", "0", "Enable Store credits given for greaking the map Record?", 0, true, 0.0, true, 1.0);
+	g_cvEnabledBPb = new Convar("credits_enable_pb_bonus", "0", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
+	g_cvNormalBAmount = new Convar("credits_amount_normal_bonus", "10.0", "How many points should be given for finishing a Map?", 0, true, 1.0, false);
+	g_cvWrBAmount = new Convar("credits_amount_wr_bonus", "25.0", "How many points should be given for breaking a Map record?", 0, true, 1.0, false);
+	g_cvBPbAmount = new Convar("credits_amount_pb_bonus", "10.0", "How many point should be given for breaking the own Personal Best?", 0, true, 1.0, false);
 	
 	
-	AutoExecConfig_CleanFile();
-	AutoExecConfig_ExecuteFile();
+	Convar.CreateConfig();
 }
 
 
