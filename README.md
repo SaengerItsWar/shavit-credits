@@ -3,7 +3,7 @@ shavit-credits for the Bhoptimer from Shavitush
 
 You are Currently at the Zephyrus Version
 
-#**Requitements**
+# **Requitements**
 Compiler from sourcemod build 6449 or greater.
 
 
