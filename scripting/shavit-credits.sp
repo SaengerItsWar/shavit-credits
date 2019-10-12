@@ -67,7 +67,7 @@ public void OnPluginStart()
 	g_cvBPbAmount = new Convar("credits_amount_pb_bonus", "10.0", "How many point should be given for breaking the own Personal Best?", 0, true, 1.0, false);
 	
 	
-	Convar.CreateConfig();
+	Convar.CreateConfig("shavit-credits");
 }
 
 
