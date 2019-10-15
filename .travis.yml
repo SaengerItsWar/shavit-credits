@@ -17,7 +17,7 @@ before_script:
     - wget "http://sourcemod.net/latest.php?os=linux&version=1.10" -O sourcemod.tar.gz
     - tar xfz sourcemod.tar.gz
     - rm addons/sourcemod/scripting/*.sp
-    - cp scripting addons/sourcemod/
+    - cp -rv scripting addons/sourcemod/
     - cd addons/sourcemod/scripting/
     - chmod +x spcomp
     - chmod +x compile.sh
