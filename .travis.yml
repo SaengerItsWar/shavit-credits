@@ -19,9 +19,6 @@ before_script:
     - cd addons/sourcemod/scripting/
     - chmod +x spcomp
     - chmod +x compile.sh
-    - 
-
-    - cd ../../..
 
 script:
   - ./compile.sh
