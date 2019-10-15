@@ -17,7 +17,7 @@ before_script:
     - cd ..
 
     # install the sourcemod compiler
-    - SMP="https://sourcemod.net/latest.php?version=${SMV}&os=linux"
+    - SMP="http://sourcemod.net/latest.php?version=${SMV}&os=linux"
     - wget $SMP
     - tar xfz $(basename $SMP)
     - cd addons/sourcemod/scripting/
