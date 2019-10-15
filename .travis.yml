@@ -14,7 +14,7 @@ before_script:
     - cd ..
 
     # install the sourcemod compiler
-    - wget http://sourcemod.net/latest.php?os=linux&version=1.10 -O sourcemod.tar.gz
+    - wget "http://sourcemod.net/latest.php?os=linux&version=1.10" -O sourcemod.tar.gz
     - tar xfz sourcemod.tar.gz
     - cd addons/sourcemod/scripting/
     - chmod +x spcomp
