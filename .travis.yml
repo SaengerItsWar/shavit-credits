@@ -18,9 +18,10 @@ before_script:
     - tar xfz sourcemod.tar.gz
     - cd addons/sourcemod/scripting/
     - chmod +x spcomp
-    - PATH+=":$PWD"
+    - chmod +x compile.sh
+    - 
 
     - cd ../../..
 
 script:
-    - smbuilder --flags="-E"
+  - ./compile.sh
