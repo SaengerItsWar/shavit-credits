@@ -5,9 +5,6 @@ addons:
     apt_packages:
         - lib32stdc++6  # needed for spcomp
 
-env:
-    - SMV=1.10
-
 before_script:
     # install smbuilder
     - git clone https://github.com/splewis/sm-builder
@@ -17,9 +14,8 @@ before_script:
     - cd ..
 
     # install the sourcemod compiler
-    - SMP="http://sourcemod.net/latest.php?os=linux&version=${SMV}"
-    - wget $SMP
-    - tar xfz $(basename $SMP)
+    - wget http://sourcemod.net/latest.php?os=linux&version=1.10 -O sourcemod.tar.gz
+    - tar xfz sourcemod.tar.gz
     - cd addons/sourcemod/scripting/
     - chmod +x spcomp
     - PATH+=":$PWD"
