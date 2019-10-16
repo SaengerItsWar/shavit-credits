@@ -1,10 +1,12 @@
 # shavit-credits
+[![Build Status](https://travis-ci.com/SaengerItsWar/shavit-credits.svg?branch=kxnrl)](https://travis-ci.com/SaengerItsWar/shavit-credits)
+
 shavit-credits for the Bhoptimer from Shavitush
 
 You are Currently at the kxnrl Version
 
 # **Requitements**
-Compiler from sourcemod build 6449 or greater.
+Needs the sourcemod 1.10 compiler build 6449 or greater.
 
 **this Version works Only with CSGO cause the store only supports csgo**
 
