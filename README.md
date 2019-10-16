@@ -1,5 +1,5 @@
 # shavit-credits
-![Travis CI Build](https://travis-ci.com/SaengerItsWar/shavit-credits.svg?branch=master)
+[![Build Status](https://travis-ci.com/SaengerItsWar/shavit-credits.svg?branch=master)](https://travis-ci.com/SaengerItsWar/shavit-credits)
 
 shavit-credits for the Bhoptimer from Shavitush
 
