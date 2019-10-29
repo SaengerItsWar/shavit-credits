@@ -9,6 +9,10 @@ You are Currently at the Zephyrus Version
 Needs the Sourcemod Compiler build 6449 or greater.
 
 
+[SourceMod-Store Version](https://github.com/SaengerItsWar/shavit-credits/tree/store)
+
+[SouceMod-Store Download](https://github.com/SourceMod-Store/Sourcemod-Store)
+
 [Zephyrus Store Version](https://github.com/SaengerItsWar/shavit-credits/tree/master)
 
 [Zephyrus Store Download](https://forums.alliedmods.net/showthread.php?t=276677)
