@@ -1,13 +1,17 @@
 # shavit-credits
-[![Build Status](https://travis-ci.com/SaengerItsWar/shavit-credits.svg?branch=master)](https://travis-ci.com/SaengerItsWar/shavit-credits)
+[![Build Status](https://travis-ci.com/SaengerItsWar/shavit-credits.svg?branch=store)](https://travis-ci.com/SaengerItsWar/shavit-credits)
 
 shavit-credits for the Bhoptimer from Shavitush
 
-You are Currently at the Zephyrus Version
+You are Currently at the SourceMod-Store Version
 
 # **Requitements**
 Needs the Sourcemod Compiler build 6449 or greater.
 
+
+[SourceMod-Store Version](https://github.com/SaengerItsWar/shavit-credits/tree/store)
+
+[SouceMod-Store Download](https://github.com/SourceMod-Store/Sourcemod-Store)
 
 [Zephyrus Store Version](https://github.com/SaengerItsWar/shavit-credits/tree/master)
 
