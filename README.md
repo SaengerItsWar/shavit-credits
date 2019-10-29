@@ -14,6 +14,10 @@ Needs the sourcemod 1.10 compiler build 6449 or greater.
 
 [kxnrl Store Download](https://build.kxnrl.com/Store/)
 
+[SourceMod-Store Version](https://github.com/SaengerItsWar/shavit-credits/tree/store)
+
+[SouceMod-Store Download](https://github.com/SourceMod-Store/Sourcemod-Store)
+
 [Zephyrus Store Versoin](https://github.com/SaengerItsWar/shavit-credits/tree/master)
 
 [Zephyrus Store Download](https://forums.alliedmods.net/showthread.php?t=276677)
