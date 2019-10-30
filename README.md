@@ -17,6 +17,10 @@ Needs the Sourcemod Compiler build 6449 or greater.
 
 [SouceMod-Store Download](https://github.com/SourceMod-Store/Sourcemod-Store)
 
+[MyStore Version](https://github.com/SaengerItsWar/shavit-credits/tree/mystore)
+
+[MyStore Download](https://github.com/SaengerItsWar/shavit-credits/tree/mystore)
+
 (**CSGO**)[kxnrl Store Version](https://github.com/SaengerItsWar/shavit-credits/tree/kxnrl) 
 
 (**CSGO**)[kxnrl Store Download](https://build.kxnrl.com/Store/)
