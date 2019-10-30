@@ -21,3 +21,7 @@ Needs the sourcemod 1.10 compiler build 6449 or greater.
 [Zephyrus Store Versoin](https://github.com/SaengerItsWar/shavit-credits/tree/master)
 
 [Zephyrus Store Download](https://forums.alliedmods.net/showthread.php?t=276677)
+
+[MyStore Version](https://github.com/SaengerItsWar/shavit-credits/tree/mystore)
+
+[MyStore Download](https://github.com/shanapu/MyStore)
