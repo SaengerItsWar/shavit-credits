@@ -10,7 +10,7 @@ Needs the Sourcemod Compiler build 6449 or greater.
 
 [MyStore Version](https://github.com/SaengerItsWar/shavit-credits/tree/mystore)
 
-[MyStore Download](https://github.com/SaengerItsWar/shavit-credits/tree/mystore)
+[MyStore Download](https://github.com/shanapu/MyStore)
 
 [Zephyrus Store Version](https://github.com/SaengerItsWar/shavit-credits/tree/master)
 
