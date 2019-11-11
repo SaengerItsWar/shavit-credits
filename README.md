@@ -26,7 +26,5 @@ Needs the Sourcemod Compiler build 6449 or greater.
 (**CSGO**)[kxnrl Store Download](https://build.kxnrl.com/Store/)
 
 **Thanks to:**
-
 Nairda
-
 KidFearless
