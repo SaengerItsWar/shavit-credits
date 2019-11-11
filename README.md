@@ -25,3 +25,7 @@ Needs the sourcemod 1.10 compiler build 6449 or greater.
 [MyStore Version](https://github.com/SaengerItsWar/shavit-credits/tree/mystore)
 
 [MyStore Download](https://github.com/shanapu/MyStore)
+
+**Thanks to:**
+Nairda
+KidFearless
