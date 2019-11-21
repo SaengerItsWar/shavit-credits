@@ -6,7 +6,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.3.6"
+#define PLUGIN_VERSION "1.3.7"
 chatstrings_t gS_ChatStrings;
 stylesettings_t gA_StyleSettings[STYLE_LIMIT];
 
@@ -16,7 +16,7 @@ public Plugin myinfo =
 	author = "SaengerItsWar", 
 	description = "Gives Zephyrus Store Credits for records", 
 	version = PLUGIN_VERSION, 
-	url = "https://deadnationgaming.eu/"
+	url = "https://github.com/saengeritswar/shavit-credits/"
 }
 
 // convars
