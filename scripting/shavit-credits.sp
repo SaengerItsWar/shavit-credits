@@ -6,7 +6,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.3.6"
+#define PLUGIN_VERSION "1.3.7"
 chatstrings_t gS_ChatStrings;
 stylesettings_t gA_StyleSettings[STYLE_LIMIT];
 
@@ -39,6 +39,7 @@ char g_cMap[160];
 int g_iTier;
 int g_iStyle;
 float g_fPB;
+bool g_bRankings;
 
 public void OnAllPluginsLoaded()
 {
@@ -46,6 +47,11 @@ public void OnAllPluginsLoaded()
 	{
 		SetFailState("store-backend is required for the plugin to work.");
 	}
+	else if(!LibraryExists("shavit-wr"))
+	{
+		SetFailState("Shavit WR is required for the plugin to work.");
+	}
+	g_bRankings = LibraryExists("shavit-rankings");	
 }
 
 public void OnPluginStart()
@@ -88,6 +94,22 @@ public void Shavit_OnChatConfigLoaded()
 	Shavit_GetChatStrings(sMessageStyle, gS_ChatStrings.sStyle, sizeof(chatstrings_t::sStyle));
 }
 
+public void OnLibraryAdded(const char[] name)
+{
+	if(StrEqual(name, "shavit-rankings"))
+	{
+		g_bRankings = true;
+	}
+}
+
+public void OnLibraryRemoved(const char[] name)
+{
+	if(StrEqual(name, "shavit-rankings"))
+	{
+		g_bRankings = false;
+	}
+}
+
 public void Shavit_OnStyleConfigLoaded(int styles)
 {
 	if (styles == -1)
@@ -104,8 +126,10 @@ public void Shavit_OnStyleConfigLoaded(int styles)
 
 public void Shavit_OnLeaveZone(int client, int zone, int track, int id, int entity)
 {
-	g_iStyle = Shavit_GetBhopStyle(client);
-	g_fPB = Shavit_GetClientPB(client, g_iStyle, track);
+	if(zone == Zone_Start){
+		g_iStyle = Shavit_GetBhopStyle(client);
+		g_fPB = Shavit_GetClientPB(client, g_iStyle, track);
+	}
 }
 public void Shavit_OnFinish(int client, int style, float time, int jumps, int strafes, float sync, int track)
 {
@@ -123,11 +147,19 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			
 			if(track == 0)
 			{
+				int iCredits;
 				
-				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-				float fResult = (g_cvNormalAmount.IntValue * g_iTier) * fMultiplier;
-				int iRoundResult = RoundFloat(fResult);
-				int iCredits = iRoundResult;
+				if(g_bRankings == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = (g_cvNormalAmount.IntValue * g_iTier) * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+					iCredits = g_cvNormalAmount.IntValue * g_iTier;
+				}
 
 				Store_GiveCredits(accountId, iCredits);
 
@@ -137,10 +169,18 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			
 			else if(g_cvBNormalEnabled.BoolValue == true)
 			{
-				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-				float fResult = g_cvNormalBAmount.IntValue * fMultiplier;
-				int iRoundResult = RoundFloat(fResult);
-				int iCredits = iRoundResult;
+				int iCredits;
+				if(g_bRankings == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = g_cvNormalBAmount.IntValue * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+					iCredits = g_cvNormalBAmount.IntValue;
+				}
 			
 				Store_GiveCredits(accountId, iCredits);
 				Shavit_PrintToChat(client, "%t", "NormalBonusFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
@@ -154,10 +194,18 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 		{
 			if(track == 0)
 			{
-				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-				float fResult = (g_cvPBAmount.IntValue * g_iTier) * fMultiplier;
-				int iRoundResult = RoundFloat(fResult);
-				int iCredits = iRoundResult;
+				int iCredits;
+				if(g_bRankings == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = (g_cvPBAmount.IntValue * g_iTier) * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+					iCredits = g_cvPBAmount.IntValue * g_iTier;
+				}
 			
 				Store_GiveCredits(accountId, iCredits);
 				Shavit_PrintToChat(client, "%t", "PersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
@@ -165,10 +213,18 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			
 			else if(g_cvEnabledBPb.BoolValue == true)
 			{
-				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-				float fResult = g_cvBPbAmount.IntValue * fMultiplier;
-				int iRoundResult = RoundFloat(fResult);
-				int iCredits = iRoundResult;
+				int iCredits;
+				if(g_bRankings == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = g_cvBPbAmount.IntValue * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+					iCredits = g_cvBPbAmount.IntValue;
+				}
 			
 				Store_GiveCredits(accountId, iCredits);
 				Shavit_PrintToChat(client, "%t", "BonusPersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
@@ -190,21 +246,37 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 	{
 		if(track == 0)
 		{
-			
-			float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-			float fResult = (g_cvWrAmount.IntValue * g_iTier) * fMultiplier;
-			int iRoundResult = RoundFloat(fResult);
-			int iCredits = iRoundResult;
+			int iCredits;
+			if(g_bRankings == true)
+			{			
+				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+				float fResult = (g_cvWrAmount.IntValue * g_iTier) * fMultiplier;
+				int iRoundResult = RoundFloat(fResult);
+				iCredits = iRoundResult;
+			}
+			else
+			{
+				iCredits = g_cvWrAmount.IntValue * g_iTier;
+			}
 		
 			Store_GiveCredits(accountId, iCredits);
 			Shavit_PrintToChat(client, "%t", "WorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
 		
-		else if(g_cvBWREnabled.BoolValue == true) {
-			float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-			float fResult = g_cvWrBAmount.IntValue * fMultiplier;
-			int iRoundResult = RoundFloat(fResult);
-			int iCredits = iRoundResult;
+		else if(g_cvBWREnabled.BoolValue == true)
+		{
+			int iCredits;
+			if(g_bRankings == true)
+			{
+				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+				float fResult = g_cvWrBAmount.IntValue * fMultiplier;
+				int iRoundResult = RoundFloat(fResult);
+				iCredits = iRoundResult;
+			}
+			else
+			{
+				iCredits = g_cvWrBAmount.IntValue;
+			}
 		
 			Store_GiveCredits(accountId, iCredits);
 
