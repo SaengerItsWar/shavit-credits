@@ -57,7 +57,7 @@ public void OnAllPluginsLoaded()
 public void OnPluginStart()
 {
 	LoadTranslations("shavit-credits.phrases");
-	CreateConVar("shavit_credtis_version", PLUGIN_VERSION, "MyStore : Shavit Credits for records", FCVAR_SPONLY | FCVAR_DONTRECORD | FCVAR_NOTIFY);
+	CreateConVar("shavit_credtis_version", PLUGIN_VERSION, "MyStore : Shavit Credits for records", FCVAR_NOTIFY | FCVAR_DONTRECORD);
 	g_cvNormalEnabled = new Convar("credits_enable_normal", "1", "Enable Store credits given for finishing a map?", 0, true, 0.0, true, 1.0);
 	g_cvWREnabled = new Convar("credits_enable_wr", "1", "Enable Store credits given for greaking the map Record?", 0, true, 0.0, true, 1.0);
 	g_cvEnabledPb = new Convar("credits_enable_pb", "1", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
