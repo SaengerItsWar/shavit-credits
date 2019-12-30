@@ -67,3 +67,5 @@ scripting/include/topmenus.inc
 scripting/include/usermessages.inc
 scripting/include/vector.inc
 scripting/include/version.inc
+scripting/compile.exe
+scripting/spcomp.exe
