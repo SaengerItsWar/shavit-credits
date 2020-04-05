@@ -67,3 +67,5 @@ scripting/include/adt_array.inc
 scripting/include/adt.inc
 scripting/include/adminmenu.inc
 scripting/include/admin.inc
+scripting/compile.exe
+scripting/spcomp.exe
