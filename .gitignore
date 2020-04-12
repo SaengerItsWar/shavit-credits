@@ -69,3 +69,4 @@ scripting/include/version.inc
 scripting/include/version_auto.inc
 scripting/compile.exe
 scripting/spcomp.exe
+scripting/compile.dat
