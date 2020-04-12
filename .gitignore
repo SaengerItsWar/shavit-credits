@@ -69,3 +69,4 @@ scripting/include/adminmenu.inc
 scripting/include/admin.inc
 scripting/compile.exe
 scripting/spcomp.exe
+scripting/compile.dat
