@@ -6,7 +6,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.3.7"
+#define PLUGIN_VERSION "1.3.8"
 chatstrings_t gS_ChatStrings;
 stylesettings_t gA_StyleSettings[STYLE_LIMIT];
 
