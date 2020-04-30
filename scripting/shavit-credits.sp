@@ -6,7 +6,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.3.8"
+#define PLUGIN_VERSION "1.4.0"
 chatstrings_t gS_ChatStrings;
 stylesettings_t gA_StyleSettings[STYLE_LIMIT];
 
@@ -144,14 +144,14 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	
 	if (!g_cvTasEnabled.BoolValue)
 		if (StrContains(sStyleSpecialString, "tas") != -1)
-		return;
+			return;
 	
 	if (g_cvNormalEnabled.BoolValue == true)
 	{
 		if (g_cvT1Enabled.BoolValue == true || g_iTier != 1)
 		{
 			
-			if (track == 0)
+			if (track == Track_Main)
 			{
 				int iCredits;
 				
@@ -171,33 +171,36 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				Shavit_PrintToChat(client, "%t", "NormalFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				
 			}
-			
-			else if (g_cvBNormalEnabled.BoolValue == true)
+		}
+	}
+	
+	if (g_cvBNormalEnabled.BoolValue == true)
+	{
+		if (track == Track_Bonus)
+		{
+			int iCredits;
+			if (g_bRankings == true)
 			{
-				int iCredits;
-				if (g_bRankings == true)
-				{
-					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-					float fResult = g_cvNormalBAmount.IntValue * fMultiplier;
-					int iRoundResult = RoundFloat(fResult);
-					iCredits = iRoundResult;
-				}
-				else
-				{
-					iCredits = g_cvNormalBAmount.IntValue;
-				}
-				
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
-				Shavit_PrintToChat(client, "%t", "NormalBonusFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
+				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+				float fResult = g_cvNormalBAmount.IntValue * fMultiplier;
+				int iRoundResult = RoundFloat(fResult);
+				iCredits = iRoundResult;
 			}
+			else
+			{
+				iCredits = g_cvNormalBAmount.IntValue;
+			}
+			
+			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+			Shavit_PrintToChat(client, "%t", "NormalBonusFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
 	}
 	
 	if (g_cvEnabledPb.BoolValue == true)
 	{
-		if (time <= g_fPB)
+		if (time < g_fPB)
 		{
-			if (track == 0)
+			if (track == Track_Main)
 			{
 				int iCredits;
 				if (g_bRankings == true)
@@ -215,8 +218,14 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
 				Shavit_PrintToChat(client, "%t", "PersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
-			
-			else if (g_cvEnabledBPb.BoolValue == true)
+		}
+	}
+	
+	if (g_cvEnabledBPb.BoolValue == true)
+	{
+		if (time < g_fPB)
+		{
+			if (track == Track_Bonus)
 			{
 				int iCredits;
 				if (g_bRankings == true)
@@ -244,14 +253,14 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 	
 	if (StrContains(sStyleSpecialString, "segments") != -1)
 		return;
-		
+	
 	if (!g_cvTasEnabled.BoolValue)
 		if (StrContains(sStyleSpecialString, "tas") != -1)
 			return;
 	
 	if (g_cvWREnabled.BoolValue == true)
 	{
-		if (track == 0)
+		if (track == Track_Main)
 		{
 			int iCredits;
 			if (g_bRankings == true)
@@ -269,8 +278,11 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
 			Shavit_PrintToChat(client, "%t", "WorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
-		
-		else if (g_cvBWREnabled.BoolValue == true)
+	}
+	
+	if (g_cvBWREnabled.BoolValue == true)
+	{
+		if (track == Track_Bonus)
 		{
 			int iCredits;
 			if (g_bRankings == true)
