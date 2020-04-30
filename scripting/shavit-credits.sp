@@ -44,9 +44,9 @@ float g_fPB;
 
 public void OnAllPluginsLoaded()
 {
-	if (!LibraryExists("store"))
+	if (!LibraryExists("store_zephyrus"))
 	{
-		SetFailState("Kxnrl store is required for the plugin to work.");
+		SetFailState("Zephyrus store is required for the plugin to work.");
 	}
 	else if (!LibraryExists("shavit-wr"))
 	{
