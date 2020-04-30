@@ -6,7 +6,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.4.0"
+#define PLUGIN_VERSION "1.4.1"
 chatstrings_t gS_ChatStrings;
 stylesettings_t gA_StyleSettings[STYLE_LIMIT];
 
@@ -34,25 +34,28 @@ Convar g_cvNormalBAmount;
 Convar g_cvWrBAmount;
 Convar g_cvBPbAmount;
 Convar g_cvTasEnabled;
+Convar g_cvNewCalc;
 
 //globals
 char g_cMap[160];
 int g_iTier;
 int g_iStyle;
 float g_fPB;
-bool g_bRankings;
 
 public void OnAllPluginsLoaded()
 {
-	if (!LibraryExists("store_zephyrus"))
+	if (!LibraryExists("store"))
 	{
-		SetFailState("store_zephyrus is required for the plugin to work.");
+		SetFailState("Kxnrl store is required for the plugin to work.");
 	}
 	else if (!LibraryExists("shavit-wr"))
 	{
 		SetFailState("Shavit WR is required for the plugin to work.");
 	}
-	g_bRankings = LibraryExists("shavit-rankings");
+	else if (!LibraryExists("shavit-rankings"))
+	{
+		SetFailState("Shavit Rankings is required for the plugin to work.");
+	}
 }
 
 public void OnPluginStart()
@@ -73,6 +76,7 @@ public void OnPluginStart()
 	g_cvWrBAmount = new Convar("credits_amount_wr_bonus", "25.0", "How many points should be given for breaking a Map record?", 0, true, 1.0, false);
 	g_cvBPbAmount = new Convar("credits_amount_pb_bonus", "10.0", "How many point should be given for breaking the own Personal Best?", 0, true, 1.0, false);
 	g_cvTasEnabled = new Convar("credits_tas_enabled", "0", "Enable Store Credits for a TAS Style?", 0, true, 0.0, true, 1.0);
+	g_cvNewCalc = new Convar("credits_new_calculation", "1", "Enable the New Calculation for the credits?", 0, true, 0.0, true, 1.0);
 	
 	
 	Convar.CreateConfig("shavit-credits");
@@ -94,22 +98,6 @@ public void Shavit_OnChatConfigLoaded()
 	Shavit_GetChatStrings(sMessageVariable, gS_ChatStrings.sVariable, sizeof(chatstrings_t::sVariable));
 	Shavit_GetChatStrings(sMessageVariable2, gS_ChatStrings.sVariable2, sizeof(chatstrings_t::sVariable2));
 	Shavit_GetChatStrings(sMessageStyle, gS_ChatStrings.sStyle, sizeof(chatstrings_t::sStyle));
-}
-
-public void OnLibraryAdded(const char[] name)
-{
-	if (StrEqual(name, "shavit-rankings"))
-	{
-		g_bRankings = true;
-	}
-}
-
-public void OnLibraryRemoved(const char[] name)
-{
-	if (StrEqual(name, "shavit-rankings"))
-	{
-		g_bRankings = false;
-	}
 }
 
 public void Shavit_OnStyleConfigLoaded(int styles)
@@ -155,7 +143,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			{
 				int iCredits;
 				
-				if (g_bRankings == true)
+				if (g_cvNewCalc.BoolValue == true)
 				{
 					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
 					float fResult = (g_cvNormalAmount.IntValue * g_iTier) * fMultiplier;
@@ -179,7 +167,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 		if (track == Track_Bonus)
 		{
 			int iCredits;
-			if (g_bRankings == true)
+			if (g_cvNewCalc.BoolValue == true)
 			{
 				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
 				float fResult = g_cvNormalBAmount.IntValue * fMultiplier;
@@ -203,7 +191,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			if (track == Track_Main)
 			{
 				int iCredits;
-				if (g_bRankings == true)
+				if (g_cvNewCalc.BoolValue == true)
 				{
 					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
 					float fResult = (g_cvPBAmount.IntValue * g_iTier) * fMultiplier;
@@ -228,7 +216,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			if (track == Track_Bonus)
 			{
 				int iCredits;
-				if (g_bRankings == true)
+				if (g_cvNewCalc.BoolValue == true)
 				{
 					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
 					float fResult = g_cvBPbAmount.IntValue * fMultiplier;
@@ -263,7 +251,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 		if (track == Track_Main)
 		{
 			int iCredits;
-			if (g_bRankings == true)
+			if (g_cvNewCalc.BoolValue == true)
 			{
 				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
 				float fResult = (g_cvWrAmount.IntValue * g_iTier) * fMultiplier;
@@ -285,7 +273,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 		if (track == Track_Bonus)
 		{
 			int iCredits;
-			if (g_bRankings == true)
+			if (g_cvNewCalc.BoolValue == true)
 			{
 				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
 				float fResult = g_cvWrBAmount.IntValue * fMultiplier;
