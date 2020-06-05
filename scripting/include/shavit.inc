@@ -239,6 +239,7 @@ enum struct cp_cache_t
 	int iClassname;
 	ArrayList aFrames;
 	int iPreFrames;
+	int iTimerPreFrames;
 	bool bSegmented;
 	int iSerial;
 	bool bPractice;
@@ -1097,6 +1098,16 @@ native void Shavit_GetPlayerPB(int client, int style, float &time, int track);
 native float Shavit_GetClientPB(int client, int style, int track);
 
 /**
+ * Retrieves the completions of a player.
+ *
+ * @param client					Client index.
+ * @param style						Style to get the Completions for.
+ * @param track						Timer track.
+ * @return							Int number of the player's Completions for given style/track.
+ */
+native int Shavit_GetClientCompletions(int client, int style, int track);
+
+/**
  * Get the amount of records on the current map/style on a track.
  *
  * @param style						Style.
@@ -1734,11 +1745,21 @@ native int Shavit_GetPlayerPreFrame(int client);
  * Sets player's preframe length.
  *
  * @param client					Client index
- * @param preframe					preframe length
+ * @param PreFrame					PreFrame length
+ * @param TimerPreFrame				Timer start frame length
  *
  * @noreturn
  */
-native void Shavit_SetPlayerPreFrame(int client, int preframe);
+native void Shavit_SetPlayerPreFrame(int client, int PreFrame, int TimerPreFrame);
+
+/*
+ * Gets player's timer frame 
+ *
+ * @param client					Client index
+ *
+ * @return Timer start frame
+ */
+native int Shavit_GetPlayerTimerframe(int client);
 
 // same as Shavit_PrintToChat() but loops through the whole server
 // code stolen from the base halflife.inc file

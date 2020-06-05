@@ -2,32 +2,32 @@
 {
 	"NormalFinish"
 	{
-		"#format"	"{1:s},{2:d},{3:s}"
-		"en"	"You have earned {1}{2}{3} credits for finishing this map."
+		"#format"	"{1:s}{2:d}{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for finishing this map.
 	}
 	"NormalBonusFinish"
 	{
-		"#format"	"{1:s},{2:d},{3:s}"
+		"#format"	"{1:s}{2:d}{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for finishing the Bonus of this map."
 	}
 	"PersonalBest"
 	{
-		"#format"	"{1:s},{2:d},{3:s}"
+		"#format"	"{1:s}{2:d}{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for breaking your Personal Best."
 	}
 	"BonusPersonalBest"
 	{
-		"#format"	"{1:s},{2:d},{3:s}"
+		"#format"	"{1:s}{2:d}{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for breaking your bonus Personal Best."
 	}
 	"WorldRecord"
 	{
-		"#format"	"{1:s},{2:d},{3:s}"
+		"#format"	"{1:s}{2:d}{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for breaking the WR."
 	}
 	"BonusWorldRecord"
 	{
-		"#format"	"{1:s},{2:d},{3:s}"
+		"#format"	"{1:s}{2:d}{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for breaking the Bonus WR."
 	}
 }

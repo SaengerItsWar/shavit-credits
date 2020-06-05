@@ -1,12 +1,11 @@
 
-*.exe
+scripting/include/version_auto.inc
 scripting/include/admin.inc
-scripting/include/adt.inc
 scripting/include/adminmenu.inc
+scripting/include/adt.inc
 scripting/include/adt_array.inc
 scripting/include/adt_stack.inc
 scripting/include/adt_trie.inc
-scripting/include/banning.inc
 scripting/include/banning.inc
 scripting/include/basecomm.inc
 scripting/include/bitbuffer.inc
@@ -37,8 +36,8 @@ scripting/include/mapchooser.inc
 scripting/include/menus.inc
 scripting/include/nextmap.inc
 scripting/include/profiler.inc
-scripting/include/protobuf.inc
 scripting/include/regex.inc
+scripting/include/protobuf.inc
 scripting/include/sdkhooks.inc
 scripting/include/sdktools.inc
 scripting/include/sdktools_client.inc
@@ -68,5 +67,6 @@ scripting/include/topmenus.inc
 scripting/include/usermessages.inc
 scripting/include/vector.inc
 scripting/include/version.inc
-scripting/include/version_auto.inc
+scripting/compile.exe
+scripting/spcomp.exe
 scripting/compile.dat
