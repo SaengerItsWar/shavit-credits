@@ -116,6 +116,9 @@ public void Shavit_OnStyleConfigLoaded(int styles)
 
 public void Shavit_OnLeaveZone(int client, int zone, int track, int id, int entity)
 {
+	if (IsClientInGame(client) && IsFakeClient(client))
+		return;
+		
 	if (zone == Zone_Start) {
 		g_iStyle[client] = Shavit_GetBhopStyle(client);
 		g_fPB[client] = Shavit_GetClientPB(client, g_iStyle[client], track);
