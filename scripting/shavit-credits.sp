@@ -6,7 +6,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.4.1"
+#define PLUGIN_VERSION "1.4.2"
 chatstrings_t gS_ChatStrings;
 stylesettings_t gA_StyleSettings[STYLE_LIMIT];
 
@@ -39,8 +39,8 @@ Convar g_cvNewCalc;
 //globals
 char g_cMap[160];
 int g_iTier;
-int g_iStyle;
-float g_fPB;
+int g_iStyle[MAXPLAYERS+1];
+float g_fPB[MAXPLAYERS+1];
 
 public void OnAllPluginsLoaded()
 {
@@ -117,8 +117,8 @@ public void Shavit_OnStyleConfigLoaded(int styles)
 public void Shavit_OnLeaveZone(int client, int zone, int track, int id, int entity)
 {
 	if (zone == Zone_Start) {
-		g_iStyle = Shavit_GetBhopStyle(client);
-		g_fPB = Shavit_GetClientPB(client, g_iStyle, track);
+		g_iStyle[client] = Shavit_GetBhopStyle(client);
+		g_fPB[client] = Shavit_GetClientPB(client, g_iStyle[client], track);
 	}
 }
 
@@ -187,7 +187,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	
 	if (g_cvEnabledPb.BoolValue == true)
 	{
-		if (time < g_fPB)
+		if (time < g_fPB[client])
 		{
 			if (track == Track_Main)
 			{
@@ -212,23 +212,26 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	
 	if (g_cvEnabledBPb.BoolValue == true)
 	{
-		if (track == Track_Bonus)
+		if (time < g_fPB[client])
 		{
-			int iCredits;
-			if (g_cvNewCalc.BoolValue == true)
+			if (track == Track_Bonus)
 			{
-				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-				float fResult = g_cvBPbAmount.IntValue * fMultiplier;
-				int iRoundResult = RoundFloat(fResult);
-				iCredits = iRoundResult;
+				int iCredits;
+				if (g_cvNewCalc.BoolValue == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = g_cvBPbAmount.IntValue * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+					iCredits = g_cvBPbAmount.IntValue;
+				}
+				
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Bonus Personal Best");
+				Shavit_PrintToChat(client, "%t", "BonusPersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
-			else
-			{
-				iCredits = g_cvBPbAmount.IntValue;
-			}
-			
-			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Bonus Personal Best");
-			Shavit_PrintToChat(client, "%t", "BonusPersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
 	}
 }
