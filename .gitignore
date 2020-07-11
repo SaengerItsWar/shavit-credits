@@ -70,3 +70,7 @@ scripting/include/version.inc
 scripting/compile.exe
 scripting/spcomp.exe
 scripting/compile.dat
+scripting/include/SteamWorks.inc
+scripting/include/dhooks.inc
+scripting/include/rtler.inc
+scripting/include/bhopstats.inc

@@ -25,14 +25,20 @@ Convar g_cvWREnabled;
 Convar g_cvEnabledPb;
 Convar g_cvT1Enabled;
 Convar g_cvNormalAmount;
+Convar g_cvNormalAmountAgain;
 Convar g_cvWrAmount;
+Convar g_cvWrAmountAgain;
 Convar g_cvPBAmount;
+Convar g_cvPBAmountAgain;
 Convar g_cvBNormalEnabled;
 Convar g_cvBWREnabled;
 Convar g_cvEnabledBPb;
 Convar g_cvNormalBAmount;
+Convar g_cvNormalBAmountAgain;
 Convar g_cvWrBAmount;
+Convar g_cvWrBAmountAgain;
 Convar g_cvBPbAmount;
+Convar g_cvBPbAmountAgain;
 Convar g_cvTasEnabled;
 Convar g_cvNewCalc;
 
@@ -41,6 +47,7 @@ char g_cMap[160];
 int g_iTier;
 int g_iStyle[MAXPLAYERS+1];
 float g_fPB[MAXPLAYERS+1];
+int g_iCompletions[MAXPLAYERS+1];
 
 public void OnAllPluginsLoaded()
 {
@@ -67,14 +74,20 @@ public void OnPluginStart()
 	g_cvEnabledPb = new Convar("credits_enable_pb", "1", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
 	g_cvT1Enabled = new Convar("credits_enable_t1", "0", "Enable/Disable given credits for Tier 1. This has no effect on WRs and PBs!", 0, true, 0.0, true, 1.0);
 	g_cvNormalAmount = new Convar("credits_amount_normal", "10.0", "How many points should be given for finishing a Map?(will be claculated per Tier(amount_normal*Tier))", 0, true, 1.0, false);
+	g_cvNormalAmountAgain = new Convar("credits_amount_normal_again", "5.0", "How many points should be given for finishing a Map Again?(will be claculated per Tier(amount_normal*Tier))", 0, true, 1.0, false);
 	g_cvWrAmount = new Convar("credits_amount_wr", "25.0", "How many points should be given for breaking a Map record?(will be calculated per Tier(amount_wr*Tier))", 0, true, 1.0, false);
+	g_cvWrAmountAgain = new Convar("credits_amount_wr_again", "12.0", "How many points should be given for breaking a Map record Again?(will be calculated per Tier(amount_wr*Tier))", 0, true, 1.0, false);
 	g_cvPBAmount = new Convar("credits_amount_pb", "10.0", "How many point should be given for breaking the own Personal Best?(will be calculated per Tier(amount_pb*Tier))", 0, true, 1.0, false);
+	g_cvPBAmountAgain = new Convar("credits_amount_pb_again", "5.0", "How many point should be given for breaking the own Personal Best Again?(will be calculated per Tier(amount_pb*Tier))", 0, true, 1.0, false);
 	g_cvBNormalEnabled = new Convar("credits_enable_normal_bonus", "0", "Enable Store credits given for finishing a map?", 0, true, 0.0, true, 1.0);
 	g_cvBWREnabled = new Convar("credits_enable_wr_bonus", "0", "Enable Store credits given for greaking the map Record?", 0, true, 0.0, true, 1.0);
 	g_cvEnabledBPb = new Convar("credits_enable_pb_bonus", "0", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
 	g_cvNormalBAmount = new Convar("credits_amount_normal_bonus", "10.0", "How many points should be given for finishing a Map?", 0, true, 1.0, false);
+	g_cvNormalBAmountAgain = new Convar("credits_amount_normal_bonus_again", "5.0", "How many points should be given for finishing a Map Again?", 0, true, 1.0, false);
 	g_cvWrBAmount = new Convar("credits_amount_wr_bonus", "25.0", "How many points should be given for breaking a Map record?", 0, true, 1.0, false);
+	g_cvWrBAmountAgain = new Convar("credits_amount_wr_bonus_again", "12.0", "How many points should be given for breaking a Map record Again?", 0, true, 1.0, false);
 	g_cvBPbAmount = new Convar("credits_amount_pb_bonus", "10.0", "How many point should be given for breaking the own Personal Best?", 0, true, 1.0, false);
+	g_cvBPbAmountAgain = new Convar("credits_amount_pb_bonus_again", "5.0", "How many point should be given for breaking the own Personal Best Again?", 0, true, 1.0, false);
 	g_cvTasEnabled = new Convar("credits_tas_enabled", "0", "Enable Store Credits for a TAS Style?", 0, true, 0.0, true, 1.0);
 	g_cvNewCalc = new Convar("credits_new_calculation", "1", "Enable the New Calculation for the credits?", 0, true, 0.0, true, 1.0);
 	
@@ -110,7 +123,6 @@ public void Shavit_OnStyleConfigLoaded(int styles)
 	for (int i; i < styles; i++)
 	{
 		Shavit_GetStyleSettings(i, gA_StyleSettings[i]);
-		
 	}
 }
 
@@ -120,8 +132,9 @@ public void Shavit_OnLeaveZone(int client, int zone, int track, int id, int enti
 		return;
 		
 	if (zone == Zone_Start) {
-		g_iStyle[client] = Shavit_GetBhopStyle(client);
-		g_fPB[client] = Shavit_GetClientPB(client, g_iStyle[client], track);
+			g_iStyle[client] = Shavit_GetBhopStyle(client);
+			g_fPB[client] = Shavit_GetClientPB(client, g_iStyle[client], track);
+			g_iCompletions[client] = Shavit_GetClientCompletions(client, g_iStyle[client], track);
 	}
 }
 
@@ -144,24 +157,44 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			
 			if (track == Track_Main)
 			{
-				int iCredits;
-				
-				if (g_cvNewCalc.BoolValue == true)
+				if (g_iCompletions[client] == 0)
 				{
-					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-					float fResult = (g_cvNormalAmount.IntValue * g_iTier) * fMultiplier;
-					int iRoundResult = RoundFloat(fResult);
-					iCredits = iRoundResult;
+					int iCredits;
+					
+					if (g_cvNewCalc.BoolValue == true)
+					{
+						float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+						float fResult = (g_cvNormalAmount.IntValue * g_iTier) * fMultiplier;
+						int iRoundResult = RoundFloat(fResult);
+						iCredits = iRoundResult;
+					}
+					else
+					{
+						iCredits = g_cvNormalAmount.IntValue * g_iTier;
+					}
+					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map");
+					
+					Shavit_PrintToChat(client, "%t", "NormalFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				}
-				else
+				else if (g_iCompletions[client] >=1)
 				{
-					iCredits = g_cvNormalAmount.IntValue * g_iTier;
+					int iCredits;
+					
+					if (g_cvNewCalc.BoolValue == true)
+					{
+						float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+						float fResult = (g_cvNormalAmountAgain.IntValue * g_iTier) * fMultiplier;
+						int iRoundResult = RoundFloat(fResult);
+						iCredits = iRoundResult;
+					}
+					else
+					{
+						iCredits = g_cvNormalAmountAgain.IntValue * g_iTier;
+					}
+					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map again");
+					
+					Shavit_PrintToChat(client, "%t", "NormalFinishAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				}
-				
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map");
-				
-				Shavit_PrintToChat(client, "%t", "NormalFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
-				
 			}
 		}
 	}
@@ -170,21 +203,42 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	{
 		if(track == Track_Bonus)
 		{
-			int iCredits;
-			if (g_cvNewCalc.BoolValue == true)
+			if (g_iCompletions[client] == 0)
 			{
-				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-				float fResult = g_cvNormalBAmount.IntValue * fMultiplier;
-				int iRoundResult = RoundFloat(fResult);
-				iCredits = iRoundResult;
+				int iCredits;
+				if (g_cvNewCalc.BoolValue == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = g_cvNormalBAmount.IntValue * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+						iCredits = g_cvNormalBAmount.IntValue;
+				}
+				
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map Bonus");
+				Shavit_PrintToChat(client, "%t", "NormalBonusFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
-			else
+			else if (g_iCompletions[client] >=1)
 			{
-					iCredits = g_cvNormalBAmount.IntValue;
+				int iCredits;
+				if (g_cvNewCalc.BoolValue == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = g_cvNormalBAmountAgain.IntValue * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+						iCredits = g_cvNormalBAmount.IntValue;
+				}
+				
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map Bonus Again");
+				Shavit_PrintToChat(client, "%t", "NormalBonusFinishAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
-			
-			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map Bonus");
-			Shavit_PrintToChat(client, "%t", "NormalBonusFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
 	}
 	
@@ -194,30 +248,51 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 		{
 			if (track == Track_Main)
 			{
-				int iCredits;
-				if (g_cvNewCalc.BoolValue == true)
+				if (g_iCompletions[client] == 0)
 				{
-					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-					float fResult = (g_cvPBAmount.IntValue * g_iTier) * fMultiplier;
-					int iRoundResult = RoundFloat(fResult);
-					iCredits = iRoundResult;
+					int iCredits;
+					if (g_cvNewCalc.BoolValue == true)
+					{
+						float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+						float fResult = (g_cvPBAmount.IntValue * g_iTier) * fMultiplier;
+						int iRoundResult = RoundFloat(fResult);
+						iCredits = iRoundResult;
+					}
+					else
+					{
+						iCredits = g_cvPBAmount.IntValue * g_iTier;
+					}
+					
+					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Personal Best");
+					Shavit_PrintToChat(client, "%t", "PersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				}
-				else
+				else if (g_iCompletions[client] >=1)
 				{
-					iCredits = g_cvPBAmount.IntValue * g_iTier;
+					int iCredits;
+					if (g_cvNewCalc.BoolValue == true)
+					{
+						float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+						float fResult = (g_cvPBAmountAgain.IntValue * g_iTier) * fMultiplier;
+						int iRoundResult = RoundFloat(fResult);
+						iCredits = iRoundResult;
+					}
+					else
+					{
+						iCredits = g_cvPBAmount.IntValue * g_iTier;
+					}
+					
+					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Personal Best Again");
+					Shavit_PrintToChat(client, "%t", "PersonalBestAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				}
-				
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Personal Best");
-				Shavit_PrintToChat(client, "%t", "PersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 		}
 	}
 	
 	if (g_cvEnabledBPb.BoolValue == true)
 	{
-		if (time < g_fPB[client])
+		if (track == Track_Bonus)
 		{
-			if (track == Track_Bonus)
+			if (g_iCompletions[client] == 0)
 			{
 				int iCredits;
 				if (g_cvNewCalc.BoolValue == true)
@@ -234,6 +309,24 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Bonus Personal Best");
 				Shavit_PrintToChat(client, "%t", "BonusPersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
+			}
+			else if (g_iCompletions[client] >=1)
+			{
+				int iCredits;
+				if (g_cvNewCalc.BoolValue == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = g_cvBPbAmountAgain.IntValue * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+					iCredits = g_cvBPbAmount.IntValue;
+				}
+				
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Bonus Personal Best Again");
+				Shavit_PrintToChat(client, "%t", "BonusPersonalBestAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 		}
 	}
@@ -255,21 +348,42 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 	{
 		if (track == Track_Main)
 		{
-			int iCredits;
-			if (g_cvNewCalc.BoolValue == true)
+			if (g_iCompletions[client] == 0)
 			{
-				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-				float fResult = (g_cvWrAmount.IntValue * g_iTier) * fMultiplier;
-				int iRoundResult = RoundFloat(fResult);
-				iCredits = iRoundResult;
+				int iCredits;
+				if (g_cvNewCalc.BoolValue == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = (g_cvWrAmount.IntValue * g_iTier) * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+					iCredits = g_cvWrAmount.IntValue * g_iTier;
+				}
+				
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking map record");
+				Shavit_PrintToChat(client, "%t", "WorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
-			else
+			else if (g_iCompletions[client] >=1)
 			{
-				iCredits = g_cvWrAmount.IntValue * g_iTier;
+				int iCredits;
+				if (g_cvNewCalc.BoolValue == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = (g_cvWrAmountAgain.IntValue * g_iTier) * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+					iCredits = g_cvWrAmount.IntValue * g_iTier;
+				}
+				
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking map record Again");
+				Shavit_PrintToChat(client, "%t", "WorldRecordAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
-			
-			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking map record");
-			Shavit_PrintToChat(client, "%t", "WorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
 	}
 		
@@ -277,22 +391,44 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 	{
 		if (track == Track_Bonus)
 		{
-			int iCredits;
-			if (g_cvNewCalc.BoolValue == true)
+			if (g_iCompletions[client] == 0)
 			{
-				float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-				float fResult = g_cvWrBAmount.IntValue * fMultiplier;
-				int iRoundResult = RoundFloat(fResult);
-				iCredits = iRoundResult;
+				int iCredits;
+				if (g_cvNewCalc.BoolValue == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = g_cvWrBAmount.IntValue * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+					iCredits = g_cvWrBAmount.IntValue;
+				}
+				
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking Bonus record");
+				
+				Shavit_PrintToChat(client, "%t", "BonusWorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
-			else
+			else if (g_iCompletions[client] >=1)
 			{
-				iCredits = g_cvWrBAmount.IntValue;
+				int iCredits;
+				if (g_cvNewCalc.BoolValue == true)
+				{
+					float fMultiplier = gA_StyleSettings[style].fRankingMultiplier;
+					float fResult = g_cvWrBAmountAgain.IntValue * fMultiplier;
+					int iRoundResult = RoundFloat(fResult);
+					iCredits = iRoundResult;
+				}
+				else
+				{
+					iCredits = g_cvWrBAmount.IntValue;
+				}
+				
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking Bonus record Again");
+				
+				Shavit_PrintToChat(client, "%t", "BonusWorldRecordAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
-			
-			Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking Bonus record");
-			
-			Shavit_PrintToChat(client, "%t", "BonusWorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 		}
 	}
 }
