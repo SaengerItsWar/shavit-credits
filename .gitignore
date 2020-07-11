@@ -70,3 +70,7 @@ scripting/include/vector.inc
 scripting/include/version.inc
 scripting/include/version_auto.inc
 scripting/compile.dat
+scripting/include/bhopstats.inc
+scripting/include/dhooks.inc
+scripting/include/rtler.inc
+scripting/include/SteamWorks.inc

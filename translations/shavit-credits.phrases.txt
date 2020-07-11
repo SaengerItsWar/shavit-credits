@@ -5,29 +5,59 @@
 		"#format"	"{1:s},{2:d},{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for finishing this map."
 	}
+	"NormalFinishAgain"
+	{
+		"#format"	"{1:s},{2:d},{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for finishing this map again."
+	}
 	"NormalBonusFinish"
 	{
 		"#format"	"{1:s},{2:d},{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for finishing the Bonus of this map."
+	}
+	"NormalBonusFinishAgain"
+	{
+		"#format"	"{1:s},{2:d},{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for finishing the Bonus of this map again."
 	}
 	"PersonalBest"
 	{
 		"#format"	"{1:s},{2:d},{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for breaking your Personal Best."
 	}
+	"PersonalBestAgain"
+	{
+		"#format"	"{1:s},{2:d},{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for breaking your Personal Best again."
+	}
 	"BonusPersonalBest"
 	{
 		"#format"	"{1:s},{2:d},{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for breaking your bonus Personal Best."
+	}
+	"BonusPersonalBestAgain"
+	{
+		"#format"	"{1:s},{2:d},{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for breaking your bonus Personal Best again."
 	}
 	"WorldRecord"
 	{
 		"#format"	"{1:s},{2:d},{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for breaking the WR."
 	}
+	"WorldRecordAgain"
+	{
+		"#format"	"{1:s},{2:d},{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for breaking the WR again."
+	}
 	"BonusWorldRecord"
 	{
 		"#format"	"{1:s},{2:d},{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for breaking the Bonus WR."
+	}
+	"BonusWorldRecordAgain"
+	{
+		"#format"	"{1:s},{2:d},{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for breaking the Bonus WR again."
 	}
 }
