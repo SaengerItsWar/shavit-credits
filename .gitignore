@@ -70,3 +70,5 @@ scripting/include/version.inc
 scripting/compile.exe
 scripting/spcomp.exe
 scripting/compile.dat
+scripting/include/bhopstats.inc
+scripting/include/rtler.inc
