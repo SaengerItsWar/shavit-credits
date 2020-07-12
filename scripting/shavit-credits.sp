@@ -122,7 +122,7 @@ public void Shavit_OnStyleConfigLoaded(int styles)
 	
 	for (int i; i < styles; i++)
 	{
-		Shavit_GetStyleSettings(i, gA_StyleSettings[i]);
+		Shavit_GetStyleSettings(i, gA_StyleSettings[i], sizeof(stylesettings_t));
 		
 	}
 }
