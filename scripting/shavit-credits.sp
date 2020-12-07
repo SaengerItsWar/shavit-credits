@@ -51,7 +51,7 @@ int g_iCompletions[MAXPLAYERS+1];
 
 public void OnAllPluginsLoaded()
 {
-	if (!LibraryExists("store-backend"))
+	if (!LibraryExists("store-core"))
 	{
 		SetFailState("Sourcemod store is required for the plugin to work.");
 	}
