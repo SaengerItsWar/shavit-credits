@@ -1,9 +1,9 @@
 # shavit-credits
-[![Build Status](https://travis-ci.com/SaengerItsWar/shavit-credits.svg?branch=master)](https://travis-ci.com/SaengerItsWar/shavit-credits)
+[![Build Status](https://travis-ci.com/SaengerItsWar/shavit-credits.svg?branch=R1ko-Shop-Core-Fork)](https://travis-ci.com/SaengerItsWar/shavit-credits)
 
 shavit-credits for the Bhoptimer from Shavitush
 
-You are Currently at the Zephyrus Version
+You are Currently at the **R1ko's Shop** Version
 
 # **Requitements**
 Needs the Sourcemod Compiler build 6449 or greater.
