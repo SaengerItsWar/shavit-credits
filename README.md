@@ -26,6 +26,10 @@ Needs the sourcemod 1.10 compiler build 6449 or greater.
 
 [MyStore Download](https://github.com/shanapu/MyStore)
 
+[R1ko's Shop-Core (Fork) Version](https://github.com/SaengerItsWar/shavit-credits/tree/R1ko-Shop-Core-Fork)
+
+[R1ko's Shop-Core (Fork) Download](https://github.com/FD-Forks/Shop-Core)
+
 **Thanks to:**
 Nairda
 KidFearless
