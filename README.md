@@ -25,6 +25,10 @@ Needs the Sourcemod Compiler build 6449 or greater.
 
 (**CSGO**)[kxnrl Store Download](https://build.kxnrl.com/Store/)
 
+[R1ko's Shop-Core (Fork) Version](https://github.com/SaengerItsWar/shavit-credits/tree/r1ko-shop-core-fork)
+
+[R1ko's Shop-Core (Fork) Download](https://github.com/FD-Forks/Shop-Core)
+
 
 **Thanks to:**
 Nairda
