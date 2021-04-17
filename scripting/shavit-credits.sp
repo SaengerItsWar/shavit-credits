@@ -6,7 +6,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.4.5"
+#define PLUGIN_VERSION "1.4.6"
 chatstrings_t gS_ChatStrings;
 
 public Plugin myinfo = 
@@ -146,7 +146,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 	
-	if (StrContains(sStyleSpecialString, "segments") != -1 || g_bUnranked[style] == true)
+	if (StrContains(sStyleSpecialString, "segments") != -1 || g_bUnranked[style] == true || Shavit_IsPracticeMode(client) == true)
 		return;
 	
 	if (!g_cvTasEnabled.BoolValue)
@@ -319,7 +319,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 	
-	if (StrContains(sStyleSpecialString, "segments") != -1 || g_bUnranked[style] == true)
+	if (StrContains(sStyleSpecialString, "segments") != -1 || g_bUnranked[style] == true || Shavit_IsPracticeMode(client) == true)
 		return;
 	
 	if (!g_cvTasEnabled.BoolValue)
