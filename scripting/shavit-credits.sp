@@ -47,8 +47,6 @@ int g_iTier;
 int g_iStyle[MAXPLAYERS + 1];
 float g_fPB[MAXPLAYERS + 1];
 int g_iCompletions[MAXPLAYERS + 1];
-float g_fRankingMultiplier[STYLE_LIMIT];
-bool g_bUnranked[STYLE_LIMIT];
 
 public void OnAllPluginsLoaded()
 {
@@ -114,21 +112,6 @@ public void Shavit_OnChatConfigLoaded()
 	Shavit_GetChatStrings(sMessageStyle, gS_ChatStrings.sStyle, sizeof(chatstrings_t::sStyle));
 }
 
-public void Shavit_OnStyleConfigLoaded(int styles)
-{
-	if (styles == -1)
-	{
-		styles = Shavit_GetStyleCount();
-	}
-	
-	for (int i; i < styles; i++)
-	{
-		g_fRankingMultiplier[i] = Shavit_GetStyleSettingFloat(i, "rankingmultiplier");
-		g_bUnranked[i] = Shavit_GetStyleSettingBool(i, "unranked");
-			
-	}
-}
-
 public void Shavit_OnLeaveZone(int client, int zone, int track, int id, int entity)
 {
 	if (IsClientInGame(client) && IsFakeClient(client))
@@ -146,7 +129,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 	
-	if (StrContains(sStyleSpecialString, "segments") != -1 || g_bUnranked[style] == true || Shavit_IsPracticeMode(client) == true)
+	if (StrContains(sStyleSpecialString, "segments") != -1 || Shavit_GetStyleSettingBool(style, "unranked") == true || Shavit_IsPracticeMode(client) == true)
 		return;
 	
 	if (!g_cvTasEnabled.BoolValue)
@@ -319,7 +302,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 	
-	if (StrContains(sStyleSpecialString, "segments") != -1 || g_bUnranked[style] == true || Shavit_IsPracticeMode(client) == true)
+	if (StrContains(sStyleSpecialString, "segments") != -1 || Shavit_GetStyleSettingBool(style, "unranked") == true || Shavit_IsPracticeMode(client) == true)
 		return;
 	
 	if (!g_cvTasEnabled.BoolValue)
@@ -405,14 +388,14 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 
 public int CalculatePoints(int cvAmount, int style)
 {
-	float fResult = (cvAmount * g_iTier) * g_fRankingMultiplier[style];
+	float fResult = (cvAmount * g_iTier) * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
 	int iRoundResult = RoundFloat(fResult);
 	return iRoundResult;
 }
 
 public int CalculatePointsBonus(int cvAmount, int style)
 {
-	float fResult = cvAmount * g_fRankingMultiplier[style];
+	float fResult = cvAmount * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
 	int iRoundResult = RoundFloat(fResult);
 	return iRoundResult;
 }
