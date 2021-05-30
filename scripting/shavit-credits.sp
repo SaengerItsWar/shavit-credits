@@ -6,7 +6,6 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define debug
 #define PLUGIN_VERSION "1.4.6"
 chatstrings_t gS_ChatStrings;
 stylesettings_t gA_StyleSettings[STYLE_LIMIT];
@@ -170,12 +169,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					{
 						iCredits = g_cvNormalAmount.IntValue * g_iTier;
 					}
-					#if defined debug
-					Shavit_PrintToChatAll("debug: Normal iCredits %d", iCredits);
-					char sStyleNameString[sizeof(stylestrings_t::sStyleName)];
-					char stylename = Shavit_GetStyleStrings(style, sStyleName, sStyleNameString, sizeof(sStyleNameString));
-					Shavit_PrintToChatAll("debug: stylename %s", stylename);
-					#endif
+					
 					Shop_SetClientCredits(client, Shop_GetClientCredits(client) + iCredits);
 					
 					Shavit_PrintToChat(client, "%t", "NormalFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
@@ -192,9 +186,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					{
 						iCredits = g_cvNormalAmountAgain.IntValue * g_iTier;
 					}
-					#if defined debug
-					Shavit_PrintToChatAll("debug: Normal Again iCredits %d", iCredits);
-					#endif
+
 					Shop_SetClientCredits(client, Shop_GetClientCredits(client) + iCredits);
 					
 					Shavit_PrintToChat(client, "%t", "NormalFinishAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
@@ -424,17 +416,8 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 public int CalculatePoints(int cvAmount, int style)
 {
 	float fRankingMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-	#if defined debug
-	Shavit_PrintToChatAll("debug: fRankingMultiplier %f", fRankingMultiplier);
-	#endif
 	float fResult = (cvAmount * g_iTier) * fRankingMultiplier;
-	#if defined debug
-	Shavit_PrintToChatAll("debug: cvAmount %d \n g_Tier %d \nfResult %f", cvAmount, g_iTier, fResult);
-	#endif
 	int iRoundResult = RoundFloat(fResult);
-	#if defined debug
-	Shavit_PrintToChatAll("debug: iRoundResult %d", iRoundResult);
-	#endif
 	return iRoundResult;
 }
 
