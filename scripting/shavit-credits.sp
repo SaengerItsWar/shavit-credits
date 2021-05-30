@@ -8,6 +8,7 @@
 
 #define PLUGIN_VERSION "1.4.6"
 chatstrings_t gS_ChatStrings;
+stylesettings_t gA_StyleSettings[STYLE_LIMIT];
 
 public Plugin myinfo = 
 {
@@ -112,6 +113,19 @@ public void Shavit_OnChatConfigLoaded()
 	Shavit_GetChatStrings(sMessageStyle, gS_ChatStrings.sStyle, sizeof(chatstrings_t::sStyle));
 }
 
+public void Shavit_OnStyleConfigLoaded(int styles)
+{
+	if (styles == -1)
+	{
+		styles = Shavit_GetStyleCount();
+	}
+	
+	for (int i; i < styles; i++)
+	{
+		Shavit_GetStyleSettings(i, gA_StyleSettings[i], sizeof(stylesettings_t));			
+	}
+}
+
 public void Shavit_OnLeaveZone(int client, int zone, int track, int id, int entity)
 {
 	if (IsClientInGame(client) && IsFakeClient(client))
@@ -129,7 +143,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 	
-	if (StrContains(sStyleSpecialString, "segments") != -1 || Shavit_GetStyleSettingBool(style, "unranked") == true || Shavit_IsPracticeMode(client) == true)
+	if (StrContains(sStyleSpecialString, "segments") != -1 || gA_StyleSettings[style].bUnranked == true || Shavit_IsPracticeMode(client) == true)
 		return;
 	
 	if (!g_cvTasEnabled.BoolValue)
@@ -302,7 +316,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 	
-	if (StrContains(sStyleSpecialString, "segments") != -1 || Shavit_GetStyleSettingBool(style, "unranked") == true || Shavit_IsPracticeMode(client) == true)
+	if (StrContains(sStyleSpecialString, "segments") != -1 || gA_StyleSettings[style].bUnranked == true || Shavit_IsPracticeMode(client) == true)
 		return;
 	
 	if (!g_cvTasEnabled.BoolValue)
@@ -388,14 +402,14 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 
 public int CalculatePoints(int cvAmount, int style)
 {
-	float fResult = (cvAmount * g_iTier) * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
+	float fResult = (cvAmount * g_iTier) * gA_StyleSettings[style].fRankingMultiplier;
 	int iRoundResult = RoundFloat(fResult);
 	return iRoundResult;
 }
 
 public int CalculatePointsBonus(int cvAmount, int style)
 {
-	float fResult = cvAmount * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
+	float fResult = cvAmount * gA_StyleSettings[style].fRankingMultiplier;
 	int iRoundResult = RoundFloat(fResult);
 	return iRoundResult;
 }
