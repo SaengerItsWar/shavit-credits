@@ -240,9 +240,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					{
 						iCredits = g_cvPBAmount.IntValue * g_iTier;
 					}
-					#if defined debug
-					Shavit_PrintToChatAll("debug: PB iCredits %d", iCredits);
-					#endif
+
 					Shop_SetClientCredits(client, Shop_GetClientCredits(client) + iCredits);
 					Shavit_PrintToChat(client, "%t", "PersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				}
@@ -257,9 +255,6 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					{
 						iCredits = g_cvPBAmountAgain.IntValue * g_iTier;
 					}
-					#if defined debug
-					Shavit_PrintToChatAll("debug: PB Again iCredits %d", iCredits);
-					#endif
 					Shop_SetClientCredits(client, Shop_GetClientCredits(client) + iCredits);
 					Shavit_PrintToChat(client, "%t", "PersonalBestAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				}
@@ -335,12 +330,6 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 				{
 					iCredits = g_cvWrAmount.IntValue * g_iTier;
 				}
-				#if defined debug
-				Shavit_PrintToChatAll("debug: WR iCredits %d", iCredits);
-				char sStyleNameString[sizeof(stylestrings_t::sStyleName)];
-				char stylename = Shavit_GetStyleStrings(style, sStyleName, sStyleNameString, sizeof(sStyleNameString));
-				Shavit_PrintToChatAll("debug: stylename %s", stylename);
-				#endif
 				Shop_SetClientCredits(client, Shop_GetClientCredits(client) + iCredits);
 				Shavit_PrintToChat(client, "%t", "WorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
@@ -355,9 +344,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 				{
 					iCredits = g_cvWrAmountAgain.IntValue * g_iTier;
 				}
-				#if defined debug
-				Shavit_PrintToChatAll("debug: WR Again iCredits %d", iCredits);
-				#endif
+				
 				Shop_SetClientCredits(client, Shop_GetClientCredits(client) + iCredits);
 				Shavit_PrintToChat(client, "%t", "WorldRecordAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
