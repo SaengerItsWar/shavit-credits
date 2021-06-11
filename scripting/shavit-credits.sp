@@ -44,9 +44,9 @@ Convar g_cvNewCalc;
 //globals
 char g_cMap[160];
 int g_iTier;
-int g_iStyle[MAXPLAYERS+1];
-float g_fPB[MAXPLAYERS+1];
-int g_iCompletions[MAXPLAYERS+1];
+int g_iStyle[MAXPLAYERS + 1];
+float g_fPB[MAXPLAYERS + 1];
+int g_iCompletions[MAXPLAYERS + 1];
 
 public void OnAllPluginsLoaded()
 {
@@ -214,7 +214,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				}
 				else
 				{
-						iCredits = g_cvNormalBAmount.IntValue;
+					iCredits = g_cvNormalBAmountAgain.IntValue;
 				}
 				
 				Shop_SetClientCredits(client, Shop_GetClientCredits(client) + iCredits);
@@ -255,7 +255,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					}
 					else
 					{
-						iCredits = g_cvPBAmount.IntValue * g_iTier;
+						iCredits = g_cvPBAmountAgain.IntValue * g_iTier;
 					}
 					#if defined debug
 					Shavit_PrintToChatAll("debug: PB Again iCredits %d", iCredits);
@@ -297,7 +297,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					}
 					else
 					{
-						iCredits = g_cvBPbAmount.IntValue;
+						iCredits = g_cvBPbAmountAgain.IntValue;
 					}
 					
 					Shop_SetClientCredits(client, Shop_GetClientCredits(client) + iCredits);
@@ -313,7 +313,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 	
-	if (StrContains(sStyleSpecialString, "segments") != -1 || Shavit_GetStyleSettingBool(style,"unranked") == true || Shavit_IsPracticeMode(client) == true)
+	if (StrContains(sStyleSpecialString, "segments") != -1 || Shavit_GetStyleSettingBool(style, "unranked") == true || Shavit_IsPracticeMode(client) == true)
 		return;
 	
 	if (!g_cvTasEnabled.BoolValue)
@@ -353,7 +353,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 				}
 				else
 				{
-					iCredits = g_cvWrAmount.IntValue * g_iTier;
+					iCredits = g_cvWrAmountAgain.IntValue * g_iTier;
 				}
 				#if defined debug
 				Shavit_PrintToChatAll("debug: WR Again iCredits %d", iCredits);
@@ -393,7 +393,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 				}
 				else
 				{
-					iCredits = g_cvWrBAmount.IntValue;
+					iCredits = g_cvWrBAmountAgain.IntValue;
 				}
 				
 				Shop_SetClientCredits(client, Shop_GetClientCredits(client) + iCredits);
@@ -406,16 +406,14 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 
 public int CalculatePoints(int cvAmount, int style)
 {
-	float fRankingMultiplier = Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
-	float fResult = (cvAmount * g_iTier) * fRankingMultiplier;
+	float fResult = (cvAmount * g_iTier) * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
 	int iRoundResult = RoundFloat(fResult);
 	return iRoundResult;
 }
 
 public int CalculatePointsBonus(int cvAmount, int style)
 {
-	float fRankingMultiplier = Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
-	float fResult = cvAmount * fRankingMultiplier;
+	float fResult = cvAmount * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
 	int iRoundResult = RoundFloat(fResult);
 	return iRoundResult;
 }
