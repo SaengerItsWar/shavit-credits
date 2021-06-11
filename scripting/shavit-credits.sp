@@ -6,9 +6,8 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.4.6"
+#define PLUGIN_VERSION "1.4.7"
 chatstrings_t gS_ChatStrings;
-stylesettings_t gA_StyleSettings[STYLE_LIMIT];
 
 public Plugin myinfo = 
 {
@@ -16,7 +15,7 @@ public Plugin myinfo =
 	author = "SaengerItsWar", 
 	description = "Gives Sourcemod Store Credits for records", 
 	version = PLUGIN_VERSION, 
-	url = "https://github.com/Saenger.ItsWar"
+	url = "https://github.com/saengeritswar/shavit-credits/"
 }
 
 // convars
@@ -45,9 +44,9 @@ Convar g_cvNewCalc;
 //globals
 char g_cMap[160];
 int g_iTier;
-int g_iStyle[MAXPLAYERS+1];
-float g_fPB[MAXPLAYERS+1];
-int g_iCompletions[MAXPLAYERS+1];
+int g_iStyle[MAXPLAYERS + 1];
+float g_fPB[MAXPLAYERS + 1];
+int g_iCompletions[MAXPLAYERS + 1];
 
 public void OnAllPluginsLoaded()
 {
@@ -113,18 +112,9 @@ public void Shavit_OnChatConfigLoaded()
 	Shavit_GetChatStrings(sMessageStyle, gS_ChatStrings.sStyle, sizeof(chatstrings_t::sStyle));
 }
 
-public void Shavit_OnStyleConfigLoaded(int styles)
+public void Shavit_OnTierAssigned(const char[] map, int tier)
 {
-	if (styles == -1)
-	{
-		styles = Shavit_GetStyleCount();
-	}
-	
-	for (int i; i < styles; i++)
-	{
-		Shavit_GetStyleSettings(i, gA_StyleSettings[i]);
-		
-	}
+	g_iTier = tier;
 }
 
 public void Shavit_OnLeaveZone(int client, int zone, int track, int id, int entity)
@@ -138,15 +128,16 @@ public void Shavit_OnLeaveZone(int client, int zone, int track, int id, int enti
 		g_iCompletions[client] = Shavit_GetClientCompletions(client, g_iStyle[client], track);
 	}
 }
+
 public void Shavit_OnFinish(int client, int style, float time, int jumps, int strafes, float sync, int track)
 {
 	int accountId = Store_GetClientAccountID(client);
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 	
-	if (StrContains(sStyleSpecialString, "segments") != -1 || gA_StyleSettings[style].bUnranked == true || Shavit_IsPracticeMode(client) == true)
+	if (StrContains(sStyleSpecialString, "segments") != -1 || Shavit_GetStyleSettingBool(style,"unranked") == true || Shavit_IsPracticeMode(client) == true)
 		return;
-		
+	
 	if (!g_cvTasEnabled.BoolValue)
 		if (StrContains(sStyleSpecialString, "tas") != -1)
 			return;
@@ -161,7 +152,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				if (g_iCompletions[client] == 0)
 				{
 					int iCredits;
-				
+					
 					if (g_cvNewCalc.BoolValue == true)
 					{
 						iCredits = CalculatePoints(g_cvNormalAmount.IntValue, style);
@@ -178,7 +169,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				else if (g_iCompletions[client] >=1)
 				{
 					int iCredits;
-				
+					
 					if (g_cvNewCalc.BoolValue == true)
 					{
 						iCredits = CalculatePoints(g_cvNormalAmountAgain.IntValue, style);
@@ -195,7 +186,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			}
 		}
 	}
-			
+	
 	if (g_cvBNormalEnabled.BoolValue == true)
 	{
 		if (track == Track_Bonus)
@@ -232,7 +223,6 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			}
 		}
 	}
-	
 	
 	if (g_cvEnabledPb.BoolValue == true)
 	{
@@ -273,7 +263,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			}
 		}
 	}
-			
+	
 	if (g_cvEnabledBPb.BoolValue == true)
 	{
 		if (time < g_fPB[client])
@@ -313,7 +303,6 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			}
 		}
 	}
-	
 }
 
 public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int strafes, float sync, int track)
@@ -322,9 +311,9 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 	
-	if (StrContains(sStyleSpecialString, "segments") != -1 || gA_StyleSettings[style].bUnranked == true || Shavit_IsPracticeMode(client) == true)
+	if (StrContains(sStyleSpecialString, "segments") != -1 || Shavit_GetStyleSettingBool(style, "unranked") == true || Shavit_IsPracticeMode(client) == true)
 		return;
-		
+	
 	if (!g_cvTasEnabled.BoolValue)
 		if (StrContains(sStyleSpecialString, "tas") != -1)
 			return;
@@ -365,7 +354,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 			}
 		}
 	}
-		
+	
 	if (g_cvBWREnabled.BoolValue == true)
 	{
 		if (track == Track_Bonus)
@@ -408,16 +397,14 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 
 public int CalculatePoints(int cvAmount, int style)
 {
-	float fRankingMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-	float fResult = (cvAmount * g_iTier) * fRankingMultiplier;
+	float fResult = (cvAmount * g_iTier) * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
 	int iRoundResult = RoundFloat(fResult);
 	return iRoundResult;
 }
 
 public int CalculatePointsBonus(int cvAmount, int style)
 {
-	float fRankingMultiplier = gA_StyleSettings[style].fRankingMultiplier;
-	float fResult = cvAmount * fRankingMultiplier;
+	float fResult = cvAmount * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
 	int iRoundResult = RoundFloat(fResult);
 	return iRoundResult;
 }
