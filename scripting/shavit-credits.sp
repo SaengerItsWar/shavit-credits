@@ -44,9 +44,9 @@ Convar g_cvNewCalc;
 //globals
 char g_cMap[160];
 int g_iTier;
-int g_iStyle[MAXPLAYERS+1];
-float g_fPB[MAXPLAYERS+1];
-int g_iCompletions[MAXPLAYERS+1];
+int g_iStyle[MAXPLAYERS + 1];
+float g_fPB[MAXPLAYERS + 1];
+int g_iCompletions[MAXPLAYERS + 1];
 
 public void OnAllPluginsLoaded()
 {
@@ -123,9 +123,9 @@ public void Shavit_OnLeaveZone(int client, int zone, int track, int id, int enti
 		return;
 		
 	if (zone == Zone_Start) {
-			g_iStyle[client] = Shavit_GetBhopStyle(client);
-			g_fPB[client] = Shavit_GetClientPB(client, g_iStyle[client], track);
-			g_iCompletions[client] = Shavit_GetClientCompletions(client, g_iStyle[client], track);
+		g_iStyle[client] = Shavit_GetBhopStyle(client);
+		g_fPB[client] = Shavit_GetClientPB(client, g_iStyle[client], track);
+		g_iCompletions[client] = Shavit_GetClientCompletions(client, g_iStyle[client], track);
 	}
 }
 
@@ -212,7 +212,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				}
 				else
 				{
-						iCredits = g_cvNormalBAmount.IntValue;
+					iCredits = g_cvNormalBAmountAgain.IntValue;
 				}
 				
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -251,7 +251,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					}
 					else
 					{
-						iCredits = g_cvPBAmount.IntValue * g_iTier;
+						iCredits = g_cvPBAmountAgain.IntValue * g_iTier;
 					}
 					
 					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -291,7 +291,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					}
 					else
 					{
-						iCredits = g_cvBPbAmount.IntValue;
+						iCredits = g_cvBPbAmountAgain.IntValue;
 					}
 					
 					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -307,7 +307,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 	char sStyleSpecialString[sizeof(stylestrings_t::sSpecialString)];
 	Shavit_GetStyleStrings(style, sSpecialString, sStyleSpecialString, sizeof(sStyleSpecialString));
 	
-	if (StrContains(sStyleSpecialString, "segments") != -1 || Shavit_GetStyleSettingBool(style,"unranked") == true || Shavit_IsPracticeMode(client) == true)
+	if (StrContains(sStyleSpecialString, "segments") != -1 || Shavit_GetStyleSettingBool(style, "unranked") == true || Shavit_IsPracticeMode(client) == true)
 		return;
 	
 	if (!g_cvTasEnabled.BoolValue)
@@ -342,7 +342,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 				}
 				else
 				{
-					iCredits = g_cvWrAmount.IntValue * g_iTier;
+					iCredits = g_cvWrAmountAgain.IntValue * g_iTier;
 				}
 				
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -380,7 +380,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 				}
 				else
 				{
-					iCredits = g_cvWrBAmount.IntValue;
+					iCredits = g_cvWrBAmountAgain.IntValue;
 				}
 				
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
