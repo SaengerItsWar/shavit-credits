@@ -67,7 +67,7 @@ public void OnAllPluginsLoaded()
 public void OnPluginStart()
 {
 	LoadTranslations("shavit-credits.phrases");
-	CreateConVar("shavit_credtis_version", PLUGIN_VERSION, "Kxnrl-Store : Shavit Credits for records", FCVAR_NOTIFY | FCVAR_DONTRECORD);
+	CreateConVar("shavit_credtis_version", PLUGIN_VERSION, "Zephyrus-Store : Shavit Credits for records", FCVAR_NOTIFY | FCVAR_DONTRECORD);
 	g_cvNormalEnabled = new Convar("credits_enable_normal", "1", "Enable Store credits given for finishing a map?", 0, true, 0.0, true, 1.0);
 	g_cvWREnabled = new Convar("credits_enable_wr", "1", "Enable Store credits given for greaking the map Record?", 0, true, 0.0, true, 1.0);
 	g_cvEnabledPb = new Convar("credits_enable_pb", "1", "Enable Store credits given for breaking the map Personal Best?", 0, true, 0.0, true, 1.0);
@@ -212,7 +212,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				}
 				else
 				{
-						iCredits = g_cvNormalBAmount.IntValue;
+					iCredits = g_cvNormalBAmountAgain.IntValue;
 				}
 				
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -251,7 +251,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					}
 					else
 					{
-						iCredits = g_cvPBAmount.IntValue * g_iTier;
+						iCredits = g_cvPBAmountAgain.IntValue * g_iTier;
 					}
 					
 					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -291,7 +291,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					}
 					else
 					{
-						iCredits = g_cvBPbAmount.IntValue;
+						iCredits = g_cvBPbAmountAgain.IntValue;
 					}
 					
 					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -342,7 +342,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 				}
 				else
 				{
-					iCredits = g_cvWrAmount.IntValue * g_iTier;
+					iCredits = g_cvWrAmountAgain.IntValue * g_iTier;
 				}
 				
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -380,7 +380,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 				}
 				else
 				{
-					iCredits = g_cvWrBAmount.IntValue;
+					iCredits = g_cvWrBAmountAgain.IntValue;
 				}
 				
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
