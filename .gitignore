@@ -74,3 +74,6 @@ scripting/include/bhopstats.inc
 scripting/include/dhooks.inc
 scripting/include/rtler.inc
 scripting/include/SteamWorks.inc
+scripting/include/eventqueuefix.inc
+scripting/include/closestpos.inc
+scripting/include/DynamicChannels.inc

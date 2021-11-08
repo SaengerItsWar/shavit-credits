@@ -11,7 +11,7 @@ enum struct convar_t
 {
 	ConVar cvar;
 	char description[512];
-	char defValue[64];
+	char defValue[512];
 	char name[255];
 
 	bool GetMin(float& input)
@@ -47,7 +47,7 @@ methodmap Convar < ConVar
 		convar_t savedValue;
 		savedValue.cvar = cvar;
 		strcopy(savedValue.description, 512, description);
-		strcopy(savedValue.defValue, 64, defaultValue);
+		strcopy(savedValue.defValue, sizeof(savedValue.defValue), defaultValue);
 		
 		// Can't set default values :T
 		savedValue.SetMin(hasMin, min);
@@ -87,6 +87,7 @@ methodmap Convar < ConVar
 			GetPluginFilename(GetMyHandle(), pluginName, PLATFORM_MAX_PATH);
 
 			ReplaceString(pluginName, PLATFORM_MAX_PATH, ".smx", "");
+			ReplaceString(pluginName, PLATFORM_MAX_PATH, "\\", "/");
 
 			int start = FindCharInString(pluginName, '/', true);
 
@@ -182,6 +183,8 @@ methodmap Convar < ConVar
 			int currentLine = 0;
 			while(!file.EndOfFile() && file.ReadLine(line, 512))
 			{
+				TrimString(line);
+
 				++currentLine;
 				// check if the line contains a valid statement
 				if(line[0] != '/' && line[0] != '\n' && line[0] != 0)
