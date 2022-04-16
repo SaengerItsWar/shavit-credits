@@ -58,31 +58,31 @@ enum Client_Item
 	iPriceOfPurchase,
 }
 
-native Store_RegisterHandler(String:type[], String:uniquekey[], Function:mapstart, Function:reset, Function:config, Function:use, Function:remove, bool:equipable = true, bool:raw = false);
-native Store_RegisterMenuHandler(String:identifier[], Function:menu, Function:handler);
-native Store_SetDataIndex(itemid, index);
-native Store_GetDataIndex(itemid);
-native Store_GetEquippedItem(client, String:type[], slot=0);
-native Store_IsClientLoaded(client);
-native Store_DisplayPreviousMenu(client);
-native Store_SetClientMenu(client, num);
-native Store_GetClientCredits(client);
-native Store_SetClientCredits(client, credits);
-native Store_IsClientVIP(client);
-native Store_IsItemInBoughtPackage(client, itemid, uid=-1);
-native Store_ShouldConfirm();
-native Store_DisplayConfirmMenu(client, String:title[], Function:callback, data);
-native Store_GetItem(itemid, output[Store_Item]);
-native Store_GetHandler(index, output[Type_Handler]);
-native Store_GiveItem(client, itemid, purchase=0, expiration=0, price=0);
-native Store_RemoveItem(client, itemid);
-native Store_GetClientItem(client, itemid, output[Client_Item]);
-native Store_GetClientTarget(client);
-native Store_GiveClientItem(client, recipient, itemid);
-native Store_HasClientItem(client, itemid);
-native Store_IterateEquippedItems(client, &start, bool:attributes=false);
+native int Store_RegisterHandler(String:type[], String:uniquekey[], Function:mapstart, Function:reset, Function:config, Function:use, Function:remove, bool:equipable = true, bool:raw = false);
+native int Store_RegisterMenuHandler(String:identifier[], Function:menu, Function:handler);
+native void Store_SetDataIndex(itemid, index);
+native int Store_GetDataIndex(itemid);
+native int Store_GetEquippedItem(client, String:type[], slot=0);
+native bool Store_IsClientLoaded(client);
+native void Store_DisplayPreviousMenu(client);
+native void Store_SetClientMenu(client, num);
+native int Store_GetClientCredits(client);
+native void Store_SetClientCredits(client, credits);
+native bool Store_IsClientVIP(client);
+native bool Store_IsItemInBoughtPackage(client, itemid, uid=-1);
+native bool Store_ShouldConfirm();
+native void Store_DisplayConfirmMenu(client, String:title[], Function:callback, data);
+native int Store_GetItem(int itemid, any output[sizeof(Store_Item)]);
+native void Store_GetHandler(int index, any output[sizeof(Type_Handler)]);
+native void Store_GiveItem(client, itemid, purchase=0, expiration=0, price=0);
+native void Store_RemoveItem(client, itemid);
+native bool Store_GetClientItem(int client, int itemid, any output[sizeof(Client_Item)]);
+native int Store_GetClientTarget(client);
+native int Store_GiveClientItem(client, recipient, itemid);
+native bool Store_HasClientItem(client, itemid);
+native int Store_IterateEquippedItems(client, &start, bool:attributes=false);
 
-forward Store_OnClientModelChanged(client, String:model[]);
+forward void Store_OnClientModelChanged(client, String:model[]);
 
 public Extension:__ext_store_sm =
 {
