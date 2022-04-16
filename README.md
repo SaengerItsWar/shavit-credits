@@ -1,5 +1,5 @@
 # shavit-credits
-[![MyStore Version](https://github.com/SaengerItsWar/shavit-credits/workflows/MyStore%20Version/badge.svg)](https://github.com/SaengerItsWar/shavit-credits/actions?query=workflow:"MyStore+Version")
+[![MyStore Version](https://github.com/SaengerItsWar/shavit-credits/workflows/MyStore%20Version/badge.svg)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/mystore.yml)
 
 shavit-credits for the Bhoptimer from Shavitush
 
