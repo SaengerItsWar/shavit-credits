@@ -1,4 +1,4 @@
-name: SourceMod Plugin Workflow
+name: Zephyrus Store
 
 on:
   push:
