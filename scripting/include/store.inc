@@ -15,11 +15,11 @@
 enum struct Item_Plan
 {
 	char szName[ITEM_NAME_LENGTH],
-	int iPrice_Plan,
-	int iTime_Plan
+	int iPrice,
+	int iTime
 }
 
-enum Store_Item
+enum struct Store_Item
 {
 	char szUniqueId[PLATFORM_MAX_PATH],
 	char szShortcut[64],
@@ -34,7 +34,7 @@ enum Store_Item
 	Handle hAttributes
 }
 
-enum Type_Handler
+enum struct Type_Handler
 {
 	char szType[64],
 	char szUniqueKey[32],
@@ -48,7 +48,7 @@ enum Type_Handler
 	Function fnRemove
 }
 
-enum Client_Item
+enum struct Client_Item
 {
 	int iUniqueId,
 	bool bSynced,
