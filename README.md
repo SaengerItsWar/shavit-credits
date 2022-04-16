@@ -1,5 +1,5 @@
 # shavit-credits
-[![Build Status](https://travis-ci.com/SaengerItsWar/shavit-credits.svg?branch=mystore)](https://travis-ci.com/SaengerItsWar/shavit-credits)
+[![MyStore Version](https://github.com/SaengerItsWar/shavit-credits/workflows/MyStore%20Version/badge.svg)](https://github.com/SaengerItsWar/shavit-credits/actions?query=workflow:"MyStore+Version")
 
 shavit-credits for the Bhoptimer from Shavitush
 
