@@ -1,5 +1,5 @@
 # shavit-credits
-[![Build Status](https://travis-ci.com/SaengerItsWar/shavit-credits.svg?branch=master)](https://travis-ci.com/SaengerItsWar/shavit-credits)
+[![Build Status](https://github.com/SaengerItsWar/shavit-credits/workflows/Zephyrus%20Store/badge.svg)](https://github.com/SaengerItsWar/shavit-credits/actions?query=workflow:"Zephyrus+Store")
 
 shavit-credits for the Bhoptimer from Shavitush
 
