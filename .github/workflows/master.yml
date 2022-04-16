@@ -17,6 +17,10 @@ jobs:
         tar -xzf sourcemod.tar.gz
     - name: Give spcomp the required permissions
       run: chmod +x addons/sourcemod/scripting/spcomp
+    - name: Remove unnessesary files
+      run: rm addons/sourcemod/scripting/*.sp
+    - name: Move required files into the workspace
+      run: mv scripting addons/sourcemod/scripting
     - name: Compiling Shavit-Credits
       run: |
         for file in addons/sourcemod/scripting/*.sp
