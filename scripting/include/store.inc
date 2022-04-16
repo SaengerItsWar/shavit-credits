@@ -14,48 +14,48 @@
 
 enum struct Item_Plan
 {
-	char szName[ITEM_NAME_LENGTH],
-	int iPrice,
-	int iTime
+	char szName[ITEM_NAME_LENGTH];
+	int iPrice;
+	int iTime;
 }
 
 enum struct Store_Item
 {
-	char szUniqueId[PLATFORM_MAX_PATH],
-	char szShortcut[64],
-	int iId,
-	int iParent,
-	int iHandler,
-	int iFlagBits,
-	int iData,
-	int iPlans,
-	bool bBuyable,
-	bool bIgnoreVIP,
-	Handle hAttributes
+	char szUniqueId[PLATFORM_MAX_PATH];
+	char szShortcut[64];
+	int iId;
+	int iParent;
+	int iHandler;
+	int iFlagBits;
+	int iData;
+	int iPlans;
+	bool bBuyable;
+	bool bIgnoreVIP;
+	Handle hAttributes;
 }
 
 enum struct Type_Handler
 {
-	char szType[64],
-	char szUniqueKey[32],
-	bool bEquipable,
-	bool bRaw,
-	Handle hPlugin,
-	Function fnMapStart,
-	Function fnReset,
-	Function fnConfig,
-	Function fnUse,
-	Function fnRemove
+	char szType[64];
+	char szUniqueKey[32];
+	bool bEquipable;
+	bool bRaw;
+	Handle hPlugin;
+	Function fnMapStart;
+	Function fnReset;
+	Function fnConfig;
+	Function fnUse;
+	Function fnRemove;
 }
 
 enum struct Client_Item
 {
-	int iUniqueId,
-	bool bSynced,
-	bool bDeleted,
-	int iDateOfPurchase,
-	int iDateOfExpiration,
-	int iPriceOfPurchase,
+	int iUniqueId;
+	bool bSynced;
+	bool bDeleted;
+	int iDateOfPurchase;
+	int iDateOfExpiration;
+	int iPriceOfPurchase;
 }
 
 native int Store_RegisterHandler(String:type[], String:uniquekey[], Function:mapstart, Function:reset, Function:config, Function:use, Function:remove, bool:equipable = true, bool:raw = false);
