@@ -12,50 +12,50 @@
 #define STORE_MAX_PLANS 8
 #define STORE_MAX_SLOTS 4
 
-enum Item_Plan
+enum struct Item_Plan
 {
-	String:szName[ITEM_NAME_LENGTH],
-	iPrice,
-	iTime
+	char szName[ITEM_NAME_LENGTH],
+	int iPrice_Plan,
+	int iTime_Plan
 }
 
 enum Store_Item
 {
-	String:szUniqueId[PLATFORM_MAX_PATH],
-	String:szShortcut[64],
-	iId,
-	iParent,
-	iHandler,
-	iFlagBits,
-	iData,
-	iPlans,
-	bool:bBuyable,
-	bool:bIgnoreVIP,
-	Handle:hAttributes
+	char szUniqueId[PLATFORM_MAX_PATH],
+	char szShortcut[64],
+	int iId,
+	int iParent,
+	int iHandler,
+	int iFlagBits,
+	int iData,
+	int iPlans,
+	bool bBuyable,
+	bool bIgnoreVIP,
+	Handle hAttributes
 }
 
 enum Type_Handler
 {
-	String:szType[64],
-	String:szUniqueKey[32],
-	bool:bEquipable,
-	bool:bRaw,
-	Handle:hPlugin,
-	Function:fnMapStart,
-	Function:fnReset,
-	Function:fnConfig,
-	Function:fnUse,
-	Function:fnRemove
+	char szType[64],
+	char szUniqueKey[32],
+	bool bEquipable,
+	bool bRaw,
+	Handle hPlugin,
+	Function fnMapStart,
+	Function fnReset,
+	Function fnConfig,
+	Function fnUse,
+	Function fnRemove
 }
 
 enum Client_Item
 {
-	iUniqueId,
-	bool:bSynced,
-	bool:bDeleted,
-	iDateOfPurchase,
-	iDateOfExpiration,
-	iPriceOfPurchase,
+	int iUniqueId,
+	bool bSynced,
+	bool bDeleted,
+	int iDateOfPurchase,
+	int iDateOfExpiration,
+	int iPriceOfPurchase,
 }
 
 native int Store_RegisterHandler(String:type[], String:uniquekey[], Function:mapstart, Function:reset, Function:config, Function:use, Function:remove, bool:equipable = true, bool:raw = false);
