@@ -1,5 +1,5 @@
 # shavit-credits
-[![Build Status](https://travis-ci.com/SaengerItsWar/shavit-credits.svg?branch=kxnrl)](https://travis-ci.com/SaengerItsWar/shavit-credits)
+[![kxnrl Version](https://github.com/SaengerItsWar/shavit-credits/workflows/kxnrl%20Version/badge.svg)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/kxnrl.yml)
 
 shavit-credits for the Bhoptimer from Shavitush
 
