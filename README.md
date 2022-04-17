@@ -4,6 +4,7 @@
 shavit-credits for the Bhoptimer from Shavitush
 
 You are Currently at the Zephyrus Version
+This version is also compatible with the [Fork of nuclear silo](https://github.com/nuclearsilo583/zephyrus-store-preview-new-syntax)
 
 # **Requitements**
 Needs the Sourcemod Compiler build 6449 or greater.
