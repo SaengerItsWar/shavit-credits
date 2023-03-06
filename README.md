@@ -1,5 +1,5 @@
 # shavit-credits
-[![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/SaengerItsWar/shavit-credits/master.yml?branch=master&label=Zephyrus%20Store&logo=Github&style=plastic)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/master.yml)
+[![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/SaengerItsWar/shavit-credits/master.yml?label=Zephyrus%20Store&logo=Github&style=plastic)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/master.yml)
 
 shavit-credits for the Bhoptimer from Shavitush
 
