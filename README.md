@@ -1,5 +1,5 @@
 # shavit-credits
-[![R1ko-Shop-Core](https://github.com/SaengerItsWar/shavit-credits/workflows/R1ko-Shop-Core/badge.svg)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/r1ko-shop-core-fork.yml)
+[![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/SaengerItsWar/shavit-credits/r1ko-shop-core-fork.yml?label=R1ko-Shop-Core&logo=Github&style=plastic)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/r1ko-shop-core-fork.yml)
 
 shavit-credits for the Bhoptimer from Shavitush
 
