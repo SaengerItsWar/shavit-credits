@@ -1,5 +1,5 @@
 # shavit-credits
-[![Dev Version](https://github.com/SaengerItsWar/shavit-credits/workflows/Dev%20Version/badge.svg)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/dev.yml)
+[![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/SaengerItsWar/shavit-credits/dev.yml?label=dev%20Version&logo=Github&style=plastic)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/dev.yml)
 
 shavit-credits for the Bhoptimer from Shavitush
 
