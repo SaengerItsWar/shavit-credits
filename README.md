@@ -1,5 +1,5 @@
 # shavit-credits
-[![Sourcemod Store Version](https://github.com/SaengerItsWar/shavit-credits/workflows/Sourcemod%20Store%20Version/badge.svg)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/store.yml)
+![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/SaengerItsWar/shavit-credits/store.yml?branch=store&label=Sourcemod%20Store&logo=Github&style=plastic)
 
 shavit-credits for the Bhoptimer from Shavitush
 
