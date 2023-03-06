@@ -1,5 +1,5 @@
 # shavit-credits
-![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/SaengerItsWar/shavit-credits/store.yml?branch=store&label=Sourcemod%20Store&logo=Github&style=plastic)
+[![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/SaengerItsWar/shavit-credits/store.yml?branch=store&label=Sourcemod%20Store&logo=Github&style=plastic)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/store.yml)
 
 shavit-credits for the Bhoptimer from Shavitush
 
