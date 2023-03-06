@@ -1,5 +1,5 @@
 # shavit-credits
-[![kxnrl Version](https://github.com/SaengerItsWar/shavit-credits/workflows/kxnrl%20Version/badge.svg)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/kxnrl.yml)
+[![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/SaengerItsWar/shavit-credits/kxnrl.yml?label=kxnrl%20Version&logo=Github&style=plastic)](https://github.com/SaengerItsWar/shavit-credits/actions/workflows/kxnrl.yml)
 
 shavit-credits for the Bhoptimer from Shavitush
 
