@@ -1,8 +1,9 @@
 /*
  * shavit's Timer - replay file stocks & format
- * by: shavit
+ * by: shavit, rtldg, KiD Fearless, carnifex, Nairda, EvanIMK
  *
- * This file is part of shavit's Timer.
+ * This file is part of shavit's Timer (https://github.com/shavitush/bhoptimer)
+ *
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
@@ -87,7 +88,7 @@ enum struct frame_cache_t
 }
 
 // Can be used to unpack frame_t.mousexy and frame_t.vel
-stock void UnpackSignedShorts(int x, int out[2])
+stock void UnpackSignedShorts(int x, int[] out)
 {
 	out[0] =  ((x        & 0xFFFF) ^ 0x8000) - 0x8000;
 	out[1] = (((x >> 16) & 0xFFFF) ^ 0x8000) - 0x8000;
@@ -211,9 +212,9 @@ stock bool ReadReplayFrames(File file, replay_header_t header, frame_cache_t cac
 	cache.fTickrate = header.fTickrate;
 	cache.iSteamID = header.iSteamID;
 
-	if (cache.iSteamID > 0)
+	if (cache.iSteamID != 0)
 	{
-		FormatEx(cache.sReplayName, sizeof(cache.sReplayName), "[U:1:%d]", cache.iSteamID);
+		FormatEx(cache.sReplayName, sizeof(cache.sReplayName), "[U:1:%u]", cache.iSteamID);
 	}
 
 	return true;
