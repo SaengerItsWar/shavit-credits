@@ -1,4 +1,5 @@
 
+scripting/include/version_auto.inc
 scripting/include/admin.inc
 scripting/include/adminmenu.inc
 scripting/include/adt.inc
@@ -35,8 +36,8 @@ scripting/include/mapchooser.inc
 scripting/include/menus.inc
 scripting/include/nextmap.inc
 scripting/include/profiler.inc
-scripting/include/protobuf.inc
 scripting/include/regex.inc
+scripting/include/protobuf.inc
 scripting/include/sdkhooks.inc
 scripting/include/sdktools.inc
 scripting/include/sdktools_client.inc
@@ -66,11 +67,23 @@ scripting/include/topmenus.inc
 scripting/include/usermessages.inc
 scripting/include/vector.inc
 scripting/include/version.inc
-scripting/include/version_auto.inc
 scripting/compile.exe
 scripting/spcomp.exe
 scripting/compile.dat
-scripting/include/bhopstats.inc
+scripting/include/SteamWorks.inc
 scripting/include/dhooks.inc
 scripting/include/rtler.inc
-scripting/include/SteamWorks.inc
+scripting/include/bhopstats.inc
+scripting/include/json.inc
+scripting/include/json/array.inc
+scripting/include/json/definitions.inc
+scripting/include/json/helpers/decode.inc
+scripting/include/json/helpers/errors.inc
+scripting/include/json/helpers/metastringmap.inc
+scripting/include/json/helpers/string.inc
+scripting/include/json/helpers/typedstringmap.inc
+scripting/include/json/helpers/unicode.inc
+scripting/include/json/object.inc
+scripting/include/ripext.inc
+scripting/include/ripext/http.inc
+scripting/include/ripext/json.inc
