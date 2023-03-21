@@ -1,10 +1,10 @@
 on:
   push:
-    branches: master
-
+    branches: store
+    
 jobs:
   Build:
-    name: Zephyrus Store
+    name: Sourcemod Store Version
     runs-on: ubuntu-latest
 
     steps:

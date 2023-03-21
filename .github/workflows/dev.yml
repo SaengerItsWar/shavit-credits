@@ -1,10 +1,10 @@
 on:
   push:
-    branches: master
+    branches: dev
 
 jobs:
   Build:
-    name: Zephyrus Store
+    name: DEV Version
     runs-on: ubuntu-latest
 
     steps:

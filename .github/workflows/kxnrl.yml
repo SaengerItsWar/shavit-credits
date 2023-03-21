@@ -1,10 +1,10 @@
 on:
   push:
-    branches: master
+    branches: kxnrl
 
 jobs:
   Build:
-    name: Zephyrus Store
+    name: Build Kxnrl
     runs-on: ubuntu-latest
 
     steps:
