@@ -1,8 +1,9 @@
 /*
  * shavit's Timer - core.inc file
- * by: shavit
+ * by: shavit, KiD Fearless, rtldg, Nairda, GAMMA CASE, carnifex,
  *
- * This file is part of shavit's Timer.
+ * This file is part of shavit's Timer (https://github.com/shavitush/bhoptimer)
+ *
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
@@ -16,17 +17,21 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *
-*/
+ */
 
 #if defined _shavit_core_included
 	#endinput
 #endif
 #define _shavit_core_included
 
-#define SHAVIT_VERSION "3.1.3"
+#define SHAVIT_VERSION "3.4.2"
 #define STYLE_LIMIT 256
 
-#define SHAVIT_LOG_QUERIES 0
+// god i fucking hate sourcemod. NULL_VECTOR isn't const so it's not guaranteed to be 0,0,0
+#define ZERO_VECTOR view_as<float>({0,0,0})
+
+// stolen from boosterfix
+#define EXPAND_VECTOR(%1) %1[0], %1[1], %1[2]
 
 #include <shavit/bhopstats-timerified>
 
@@ -113,7 +118,7 @@ enum struct timer_snapshot_t
 	int iTotalMeasures;
 	int iGoodGains;
 	float fServerTime;
-	int iSHSWCombination;
+	int iKeyCombo;
 	int iTimerTrack;
 	int iMeasuredJumps;
 	int iPerfectJumps;
@@ -150,6 +155,17 @@ enum struct timer_snapshot_t
 stock void Shavit_LogQuery(const char[] query)
 {
 	static File hLogFile;
+	static ConVar shavit_core_log_sql = null;
+
+	if (shavit_core_log_sql == null)
+	{
+		shavit_core_log_sql = FindConVar("shavit_core_log_sql");
+	}
+
+	if (!shavit_core_log_sql || !shavit_core_log_sql.BoolValue)
+	{
+		return;
+	}
 
 	if (hLogFile == null)
 	{
@@ -172,35 +188,20 @@ stock void Shavit_LogQuery(const char[] query)
 	}
 }
 
-methodmap Database2 < Database
+stock void QueryLog(Database db, SQLQueryCallback callback, const char[] query, any data = 0, DBPriority prio = DBPrio_Normal)
 {
-	public void Query2(SQLQueryCallback callback, const char[] query, any data = 0, DBPriority prio = DBPrio_Normal)
-	{
-#if SHAVIT_LOG_QUERIES
-		Shavit_LogQuery(query);
-#endif
-		this.Query(callback, query, data, prio);
-	}
+	Shavit_LogQuery(query);
+	db.Query(callback, query, data, prio);
 }
 
-methodmap Transaction2 < Transaction
+stock int AddQueryLog(Transaction trans, const char[] query, any data = 0)
 {
-	public Transaction2()
-	{
-		return view_as<Transaction2>(new Transaction());
-	}
-
-	public int AddQuery2(const char[] query, any data = 0)
-	{
-#if SHAVIT_LOG_QUERIES
-		Shavit_LogQuery(query);
-#endif
-		return this.AddQuery(query, data);
-	}
+	Shavit_LogQuery(query);
+	return trans.AddQuery(query, data);
 }
 
 // connects synchronously to the bhoptimer database
-// calls errors if needed
+// call errors if needed
 stock Database GetTimerDatabaseHandle(bool reuse_persistent_connection=true)
 {
 	Database db = null;
@@ -227,28 +228,47 @@ stock Database GetTimerDatabaseHandle(bool reuse_persistent_connection=true)
 	return db;
 }
 
-stock Database2 GetTimerDatabaseHandle2(bool reuse_persistent_connection=true)
-{
-	return view_as<Database2>(GetTimerDatabaseHandle(reuse_persistent_connection));
+enum {
+	Driver_unknown,
+	Driver_sqlite,
+	Driver_mysql,
+	Driver_pgsql,
 }
 
-// figures out if the database is a mysql database
-stock bool IsMySQLDatabase(Database db)
+stock int GetDatabaseDriver(Database db)
 {
-	char sDriver[8];
-	db.Driver.GetIdentifier(sDriver, 8);
+	char sDriver[16];
+	db.Driver.GetIdentifier(sDriver, sizeof(sDriver));
 
-	return StrEqual(sDriver, "mysql", false);
+	if (StrEqual(sDriver, "mysql", false))
+		return Driver_mysql;
+	else if (StrEqual(sDriver, "sqlite", false))
+		return Driver_sqlite;
+	else if (StrEqual(sDriver, "pgsql", false))
+		return Driver_pgsql;
+	else
+		return Driver_unknown;
 }
 
 stock void LowercaseString(char[] str)
 {
-	static char to_lowercase_table[256+1] = "\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2A\x2B\x2C\x2D\x2E\x2F\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3A\x3B\x3C\x3D\x3E\x3F\x40\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6A\x6B\x6C\x6D\x6E\x6F\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7A\x5B\x5C\x5D\x5E\x5F\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6A\x6B\x6C\x6D\x6E\x6F\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7A\x7B\x7C\x7D\x7E\x7F\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF";
-
-	for (int i = 0; str[i] != 0; i++)
+	int i, x;
+	while ((x = str[i]) != 0)
 	{
-		int x = str[i];
-		str[i] = to_lowercase_table[x];
+		if ('A' <= x <= 'Z')
+			str[i] += ('a' - 'A');
+		++i;
+	}
+}
+
+stock void UppercaseString(char[] str)
+{
+	int i, x;
+	while ((x = str[i]) != 0)
+	{
+		if ('a' <= x <= 'z')
+			str[i] -= ('a' - 'A');
+		++i;
 	}
 }
 
@@ -309,7 +329,7 @@ stock void GetTimerSQLPrefix(char[] buffer, int maxlen)
 
 stock bool IsValidClient(int client, bool bAlive = false)
 {
-	return (client >= 1 && client <= MaxClients && IsClientConnected(client) && IsClientInGame(client) && !IsClientSourceTV(client) && (!bAlive || IsPlayerAlive(client)));
+	return (client >= 1 && client <= MaxClients && IsClientInGame(client) && !IsClientSourceTV(client) && (!bAlive || IsPlayerAlive(client)));
 }
 
 stock bool IsSource2013(EngineVersion ev)
@@ -422,17 +442,17 @@ stock bool GuessBestMapName(ArrayList maps, const char input[PLATFORM_MAX_PATH],
 	return false;
 }
 
-stock void GetTrackName(int client, int track, char[] output, int size)
+stock void GetTrackName(int client, int track, char[] output, int size, bool include_bonus_num=true)
 {
 	if (track == Track_Main)
 	{
 		FormatEx(output, size, "%T", "Track_Main", client);
 	}
-	else if (track >= Track_Bonus)
+	else if (Track_Bonus <= track < TRACKS_SIZE)
 	{
-		FormatEx(output, size, "%T", "Track_Bonus", client, track);
+		FormatEx(output, size, "%T", include_bonus_num ? "Track_Bonus" : "Track_Bonus_NoNum", client, track);
 	}
-	else //if (track < Track_Main)
+	else
 	{
 		FormatEx(output, size, "%T", "Track_Unknown", client);
 	}
@@ -492,25 +512,21 @@ stock void SanerGetClientName(int client, char[] name)
 		return;
 	}
 
-	TrimTrailingInvalidUnicode(name);
-}
+	int len = strlen(name);
 
-stock bool TrimTrailingInvalidUnicode(char[] outstr)
-{
-	static int masks[3] = {0xC0, 0xE0, 0xF0};
-
-	int maxidx = strlen(outstr)-1;
-
-	for (int i = 0; (maxidx-i >= 0) && (i < 3); i++)
+	if (len == 31)
 	{
-		if ((outstr[maxidx-i] & masks[i]) == masks[i])
+		for (int i = 0; i < 3; i++)
 		{
-			outstr[maxidx-i] = 0;
-			return true;
+			static int masks[3] = {0xC0, 0xE0, 0xF0};
+
+			if ((name[len-i-1] & masks[i]) >= masks[i])
+			{
+				name[len-i-1] = 0;
+				return;
+			}
 		}
 	}
-
-	return false;
 }
 
 // https://forums.alliedmods.net/showthread.php?t=216841
@@ -776,26 +792,6 @@ forward void Shavit_OnChatConfigLoaded();
 forward void Shavit_OnWorstRecord(int client, int style, float time, int jumps, int strafes, float sync, int track, float oldtime, float perfs, float avgvel, float maxvel, int timestamp);
 
 /**
- * Called before clan tag variables are processed.
- *
- * @param client					Client index.
- * @param clantag					Reference to the clan tag buffer.
- * @param clantaglength				Max length of the customtag buffer.
- * @return							Plugin_Handled or Plugin_Stop to block the clan tag from changing. Anything else to pass along new values.
- */
-forward Action Shavit_OnClanTagChangePre(int client, char[] clantag, int clantaglength);
-
-/**
- * Called after clan tags are changed.
- *
- * @param client					Client index.
- * @param customtag					Reference to the custom clan tag buffer.
- * @param customtaglength			Max length of the customtag buffer.
- * @noreturn
- */
-forward void Shavit_OnClanTagChangePost(int client, char[] customtag, int customtaglength);
-
-/**
  * Called when a time offset is calculated
  *
  * @param client					Client index.
@@ -858,7 +854,7 @@ forward void Shavit_OnCountdownStart();
  *
  * @return							Database handle.
  */
-native Database Shavit_GetDatabase();
+native Database Shavit_GetDatabase(int& outdriver=0);
 
 /**
  * Starts the timer for a player.
@@ -1001,7 +997,7 @@ native void Shavit_ResumeTimer(int client, bool teleport = false);
  * Gets a players zone offset.
  *
  * @param client					Client index.
- * @param teleport					Zone type (Zone_Start or Zone_End).
+ * @param zonetype					Zone type (Zone_Start or Zone_End).
  * @return							Zone offset fraction if any for the given zone type.
  */
 native float Shavit_GetZoneOffset(int client, int zonetype);
@@ -1010,8 +1006,8 @@ native float Shavit_GetZoneOffset(int client, int zonetype);
  * Gets distance of a players distance offset given a zone.
  *
  * @param client					Client index.
- * @param teleport					Zone type  (Zone_Start or Zone_End).
- * @return 							Distance offset if any for the given zone type/
+ * @param zonetype					Zone type  (Zone_Start or Zone_End).
+ * @return 							Distance offset if any for the given zone type
  */
 native float Shavit_GetDistanceOffset(int client, int zonetype);
 
@@ -1201,9 +1197,10 @@ native void Shavit_SaveSnapshot(int client, any[] snapshot, int size = sizeof(ti
  * @param client					Client index.
  * @param snapshot					Full snapshot of the client's timer.
  * @param size						Size of the snapshot buffer, e.g sizeof(timer_snapshot_t)
+ * @param force						Forcibly load the snapshot without checking the style access for a player.
  * @return                          Success boolean
  */
-native bool Shavit_LoadSnapshot(int client, any[] snapshot, int size = sizeof(timer_snapshot_t));
+native bool Shavit_LoadSnapshot(int client, any[] snapshot, int size = sizeof(timer_snapshot_t), bool force = false);
 
 /**
  * Use this native to stop the click sound that plays upon chat messages.
@@ -1312,7 +1309,7 @@ native float Shavit_GetMaxVelocity(int client);
 native void Shavit_SetAvgVelocity(int client, float vel);
 
 /**
- * Gets the max velocity of a player.
+ * Sets the max velocity a player has reached in a run. (timer_snapshot_t.fMaxVelocity)
  *
  * @param client					Client index
  * @param vel						Max velocity
@@ -1362,20 +1359,22 @@ native float Shavit_GetClientTimescale(int client);
 native void Shavit_UpdateLaggedMovement(int client, bool user_timescale=true);
 
 /**
- * asdf
+ * Used in shavit-wr and shavit-stats to share the last printed steamid.
  *
- * @param client                    Client index
+ * @param client                    Client index to print to
+ * @param steamid                   The steamid to print (or not if it's the same as last printed)
+ * @param targetname                The player name that the steamid belongs to.
  *
- * @return                          asdf
+ * @noreturn
  */
-native bool Shavit_Core_CookiesRetrieved(int client);
+native void Shavit_PrintSteamIDOnce(int client, int steamid, const char[] targetname);
 
 /**
  * When using the timer's timescale_tas stuff, this returns whether the current frame should be recorded by replay plugins.
  *
  * @param client                    Client index
  *
- * @return                          true if the current frame should be recorded....
+ * @return                          True if the current frame should be recorded.
  */
 native bool Shavit_ShouldProcessFrame(int client);
 
@@ -1452,10 +1451,10 @@ public void __pl_shavit_core_SetNTVOptional()
 	MarkNativeAsOptional("Shavit_SetStyleSettingFloat");
 	MarkNativeAsOptional("Shavit_SetStyleSettingBool");
 	MarkNativeAsOptional("Shavit_SetStyleSettingInt");
-	MarkNativeAsOptional("Shavit_Core_CookiesRetrieved");
 	MarkNativeAsOptional("Shavit_ShouldProcessFrame");
 	MarkNativeAsOptional("Shavit_GotoEnd");
 	MarkNativeAsOptional("Shavit_UpdateLaggedMovement");
+	MarkNativeAsOptional("Shavit_PrintSteamIDOnce");
 
 	__pl_shavit_bhopstats_SetNTVOptional();
 }

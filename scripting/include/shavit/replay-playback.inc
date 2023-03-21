@@ -1,8 +1,9 @@
 /*
  * shavit's Timer - replay-playback.inc file
- * by: shavit
+ * by: shavit, rtldg, carnifex, KiD Fearless
  *
- * This file is part of shavit's Timer.
+ * This file is part of shavit's Timer (https://github.com/shavitush/bhoptimer)
+ *
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
@@ -378,10 +379,11 @@ native int Shavit_ReloadReplays(bool restart);
  * Gets time from replay frame that is closest to client.
  *
  * @param client                    Client index.
+ * @param outlength                 Fills this variable with the total length of the replay that's being compared to.
  *
  * @return                          Replay time.
  */
-native float Shavit_GetClosestReplayTime(int client);
+native float Shavit_GetClosestReplayTime(int client, float &outlength=0.0);
 
 /**
  * Gets the style the client is getting the closest replay time from.

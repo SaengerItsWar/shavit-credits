@@ -2,7 +2,8 @@ name: R1ko-Shop-Core
 
 on:
   push:
-    branches: R1ko-Shop-Core-Fork
+    branches: 
+      - R1ko-Shop-Core-Fork
 
 jobs:
   Build:
