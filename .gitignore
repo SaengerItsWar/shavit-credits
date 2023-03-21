@@ -74,3 +74,16 @@ scripting/include/SteamWorks.inc
 scripting/include/dhooks.inc
 scripting/include/rtler.inc
 scripting/include/bhopstats.inc
+scripting/include/json.inc
+scripting/include/json/array.inc
+scripting/include/json/definitions.inc
+scripting/include/json/helpers/decode.inc
+scripting/include/json/helpers/errors.inc
+scripting/include/json/helpers/metastringmap.inc
+scripting/include/json/helpers/string.inc
+scripting/include/json/helpers/typedstringmap.inc
+scripting/include/json/helpers/unicode.inc
+scripting/include/json/object.inc
+scripting/include/ripext.inc
+scripting/include/ripext/http.inc
+scripting/include/ripext/json.inc

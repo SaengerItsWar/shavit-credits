@@ -40,6 +40,26 @@
 		"#format"	"{1:s}{2:d}{3:s}"
 		"en"	"You have earned {1}{2}{3} credits for breaking your bonus Personal Best again."
 	}
+	"NormalTop10"
+	{
+		"#format"	"{1:s},{2:d},{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for being in Top 10."
+	}
+	"NormalTop10Again"
+	{
+		"#format"	"{1:s},{2:d},{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for being in Top 10 again."
+	}
+	"BonusTop10"
+	{
+		"#format"	"{1:s},{2:d},{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for being in The Bonus Top 10."
+	}
+	"BonusTop10Again"
+	{
+		"#format"	"{1:s},{2:d},{3:s}"
+		"en"	"You have earned {1}{2}{3} credits for being in the Bonus Top 10 again."
+	}
 	"WorldRecord"
 	{
 		"#format"	"{1:s}{2:d}{3:s}"

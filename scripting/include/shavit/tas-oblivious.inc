@@ -2,6 +2,9 @@
  * tas-oblivious.inc file
  * by: oblivious
  *
+ * Originally from autogain (https://github.com/defiy/autogain) Mirror: https://github.com/PMArkive/autogain
+ * and edited to be part of shavit's Timer (https://github.com/shavitush/bhoptimer)
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
@@ -39,7 +42,7 @@ stock float ground_delta_opt(int client, float angles[3], float move[3], float s
 	float fore[3], side[3], wishvel[3];
 	float wishspeed;
 
-	GetAngleVectors(angles, fore, side, NULL_VECTOR);
+	GetAngleVectors(angles, fore, side, ZERO_VECTOR);
 
 	fore[2] = 0.0;
 	side[2] = 0.0;
@@ -147,7 +150,7 @@ stock Action ObliviousOnPlayerRunCmd(int client, int& buttons, int& impulse, flo
 		float _fore[3], _side[3], _wishvel[3], _wishdir[3];
 		float _wishspeed, _wishspd, _currentspeed;
 
-		GetAngleVectors(angles, _fore, _side, NULL_VECTOR);
+		GetAngleVectors(angles, _fore, _side, ZERO_VECTOR);
 
 		_fore[2] = 0.0; _side[2] = 0.0;
 		NormalizeVector(_fore, _fore); NormalizeVector(_side, _side);
@@ -175,7 +178,7 @@ stock Action ObliviousOnPlayerRunCmd(int client, int& buttons, int& impulse, flo
 	float tmp[3];
 	tmp[0] = 0.0; tmp[2] = 0.0;
 	tmp[1] = normalize_yaw(angles[1] + delta_opt);
-	GetAngleVectors(tmp, fore, side, NULL_VECTOR);
+	GetAngleVectors(tmp, fore, side, ZERO_VECTOR);
 
 	fore[2] = 0.0; side[2] = 0.0;
 	NormalizeVector(fore, fore); NormalizeVector(side, side);
@@ -254,23 +257,9 @@ stock Action ObliviousOnPlayerRunCmd(int client, int& buttons, int& impulse, flo
 
 	if (GetVectorLength(new_vel) < 99999.0 && GetVectorLength(new_vel) > 0.0)
 	{
-#if 0
 		SetEntPropVector(client, Prop_Data, "m_vecVelocity", new_vel);
-
-		float _new_vel[3];
-		for (int i = 0; i < 3; i++)
-			_new_vel[i] = new_vel[i] + base_vel[i];
-
-		SetEntPropVector(client, Prop_Data, "m_vecAbsVelocity", _new_vel); // m_vecBaseVelocity+m_vecVelocity
-#else
-		TeleportEntity(client, NULL_VECTOR, NULL_VECTOR, new_vel);
-#endif
-		SetEntPropVector(client, Prop_Data, "m_vecBaseVelocity", base_vel);
+		SetEntPropVector(client, Prop_Data, "m_vecAbsVelocity", new_vel);
 	}
-
-#if 0
-	SetEntPropVector(client, Prop_Data, "m_vecBaseVelocity", base_vel);
-#endif
 
 	if (set_back)
 		vel[1] = 0.0;
