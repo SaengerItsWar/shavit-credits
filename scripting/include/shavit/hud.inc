@@ -2,7 +2,8 @@
  * shavit's Timer - hud.inc file
  * by: shavit
  *
- * This file is part of shavit's Timer.
+ * This file is part of shavit's Timer (https://github.com/shavitush/bhoptimer)
+ *
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
@@ -40,6 +41,7 @@
 #define HUD_USP                 (1 << 13) // makes you spawn with a USP
 #define HUD_GLOCK               (1 << 14) // makes you spawn with a Glock
 #define HUD_DEBUGTARGETNAME     (1 << 15) // admin option to show current targetname & classname
+#define HUD_SPECTATORSDEAD      (1 << 16) // for only showing spectators list when you're dead/spectating.
 
 // HUD2 - these settings will *disable* elements for the main hud
 #define HUD2_TIME               (1 << 0)
@@ -105,6 +107,12 @@ enum struct huddata_t
 	float fClosestReplayTime;
 	float fClosestVelocityDifference;
 	int iMapTier;
+	float fClosestReplayLength;
+
+	int iButtons;
+	int iScrolls;
+	int iScrollsPrev;
+	float fAngleDiff;
 }
 
 /**

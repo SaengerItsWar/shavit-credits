@@ -2,6 +2,9 @@
  * Steam ID handling stocks
  * by: rtldg
  *
+ * This file is part of shavit's Timer (https://github.com/shavitush/bhoptimer)
+ *
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
@@ -79,7 +82,7 @@ stock void AccountIDToSteamID2(int accountid, char[] buf, int buflen)
 
 stock void AccountIDToSteamID3(int accountid, char[] buf, int buflen)
 {
-	FormatEx(buf, buflen, "[U:1:%d]", accountid);
+	FormatEx(buf, buflen, "[U:1:%u]", accountid);
 }
 
 stock void SteamID64ToString(int num[2], char[] buf, int buflen)
@@ -99,5 +102,5 @@ stock int SteamID64ToAccountID(const char[] steamid64)
 	int num[2];
 	kv.SetString(NULL_STRING, steamid64);
 	kv.GetUInt64(NULL_STRING, num);
-	return num[0]; // & 0x7FFFFFFF;
+	return num[0];
 }
