@@ -154,12 +154,9 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				if (g_iCompletions[client] == 0) {
 					int iCredits;
 
-					if (g_cvNewCalc.BoolValue == true)
-					{
+					if (g_cvNewCalc.BoolValue == true) {
 						iCredits = CalculatePoints(g_cvNormalAmount.IntValue, style);
-					}
-					else
-					{
+					} else {
 						iCredits = g_cvNormalAmount.IntValue * g_iTier;
 					}
 					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -189,7 +186,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				if (g_cvNewCalc.BoolValue == true) {
 					iCredits = CalculatePointsBonus(g_cvNormalBAmount.IntValue, style);
 				} else {
-						iCredits = g_cvNormalBAmount.IntValue;		
+					iCredits = g_cvNormalBAmount.IntValue;		
 				}
 
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -275,8 +272,8 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				if (g_cvNewCalc.BoolValue == true) {
 					iCredits = CalculatePointsTop10(g_cvTop10Amount.IntValue, style, place);
 				} else {
-					float fCredits = (g_cvTop10Amount.IntValue / place);
-					iCredits = RoundFloat(fCredits); 
+					float fCredits = 
+					iCredits = g_cvTop10Amount.IntValue - (g_cvTop10Amount.IntValue - place); 
 				}
 
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
@@ -286,8 +283,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				if (g_cvNewCalc.BoolValue == true) {
 					iCredits = CalculatePointsTop10(g_cvTop10AmountAgain.IntValue, style, place);
 				} else {
-					float fCredits = (g_cvTop10AmountAgain.IntValue / place);
-					iCredits = RoundFloat(fCredits);
+					iCredits = g_cvTop10AmountAgain.IntValue - (g_cvTop10AmountAgain.IntValue - place);
 				}
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
 				Shavit_PrintToChat(client, "%t", "NormalTop10Again", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
@@ -305,8 +301,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				if (g_cvNewCalc.BoolValue == true) {
 					iCredits = CalculatePointsTop10Bonus(g_cvBonusTop10Amount.IntValue, style, place);
 				} else {
-					float fCredits = (g_cvBonusTop10Amount.IntValue / place);
-					iCredits = RoundFloat(fCredits);
+					iCredits = g_cvBonusTop10Amount.IntValue - (g_cvBonusTop10Amount.IntValue - place);
 				}
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
 				Shavit_PrintToChat(client, "%t", "BonusTop10", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
@@ -315,8 +310,8 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 				if (g_cvNewCalc.BoolValue == true) {
 					iCredits = CalculatePointsTop10Bonus(g_cvBonusTop10AmountAgain.IntValue, style, place);
 				} else {
-					float fCredits = (g_cvBonusTop10AmountAgain.IntValue / place);
-					iCredits = RoundFloat(fCredits);
+					
+					iCredits = g_cvBonusTop10AmountAgain.IntValue - (g_cvBonusTop10AmountAgain.IntValue - place);
 				}
 				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
 				Shavit_PrintToChat(client, "%t", "BonusTop10Again", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
@@ -404,15 +399,21 @@ public int CalculatePointsBonus(int cvAmount, int style) {
 }
 
 public int CalculatePointsTop10(int cvAmount, int style, int place) {
-	float fResult = (cvAmount * g_iTier )* Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
-	float fResult1 = fResult - (cvAmount / place);
+	float fResult = (cvAmount * g_iTier) * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
+	float fResult1 = fResult - ((cvAmount - place) * g_iTier);
 	int iRoundResult = RoundFloat(fResult1);
+	if (iRoundResult == 0){
+		iRoundResult=iRoundResult+1;
+	}
 	return iRoundResult;
 }
 
 public int CalculatePointsTop10Bonus(int cvAmount, int style, int place) {
 	float fResult = cvAmount * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
-	float fResult1 = fResult - (cvAmount / place);
+	float fResult1 = fResult - (cvAmount - place);
 	int iRoundResult = RoundFloat(fResult1);
+	if (iRoundResult == 0){
+		iRoundResult=iRoundResult+1;
+	}
 	return iRoundResult;
 }
