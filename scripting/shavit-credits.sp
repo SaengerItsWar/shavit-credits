@@ -265,65 +265,6 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 			}
 		}
 	}
-
-	if (g_cvTop10Enabled.BoolValue == true) {
-		int place;
-		place = Shavit_GetRankForTime(style, time, track);
-
-		if (place <= 10) {
-			if(g_iCompletions[client] == 0) {
-				int iCredits;
-				if (g_cvNewCalc.BoolValue == true) {
-					iCredits = CalculatePointsTop10(g_cvTop10Amount.IntValue, style, place);
-				} else {
-					float fCredits = (g_cvTop10Amount.IntValue / place);
-					iCredits = RoundFloat(fCredits);
-				}
-
-				Store_GiveCredits(accountId, iCredits);
-				Shavit_PrintToChat(client, "%t", "NormalTop10", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
-			} else if (g_iCompletions[client] >= 1){
-				int iCredits;
-				if (g_cvNewCalc.BoolValue == true) {
-					iCredits = CalculatePointsTop10(g_cvTop10AmountAgain.IntValue, style, place);
-				} else {
-					float fCredits = (g_cvTop10AmountAgain.IntValue / place);
-					iCredits = RoundFloat(fCredits);
-				}
-				Store_GiveCredits(accountId, iCredits);
-				Shavit_PrintToChat(client, "%t", "NormalTop10Again", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
-			}
-		}
-	}
-
-	if (g_cvBonusTop10Enabled.BoolValue == true) {
-		int place;
-		place = Shavit_GetRankForTime(style, time, track);
-
-		if (place <= 10) {
-			if(g_iCompletions[client] == 0) {
-				int iCredits;
-				if (g_cvNewCalc.BoolValue == true) {
-					iCredits = CalculatePointsTop10Bonus(g_cvBonusTop10Amount.IntValue, style, place);
-				} else {
-					float fCredits = (g_cvBonusTop10Amount.IntValue / place);
-					iCredits = RoundFloat(fCredits);
-				}
-				Store_GiveCredits(accountId, iCredits);
-				Shavit_PrintToChat(client, "%t", "BonusTop10", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
-			} else if (g_iCompletions[client] >= 1){
-				int iCredits;
-				if (g_cvNewCalc.BoolValue == true) {
-					iCredits = CalculatePointsTop10Bonus(g_cvBonusTop10AmountAgain.IntValue, style, place);
-				} else {
-					float fCredits = (g_cvBonusTop10AmountAgain.IntValue / place);
-					iCredits = RoundFloat(fCredits);
-				}
-				Store_GiveCredits(accountId, iCredits);
-				Shavit_PrintToChat(client, "%t", "BonusTop10Again", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
-			}
-		}
-	}
 }
 
 public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, int strafes, float sync, int track) {
@@ -402,19 +343,5 @@ public int CalculatePoints(int cvAmount, int style) {
 public int CalculatePointsBonus(int cvAmount, int style) {
 	float fResult = cvAmount * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
 	int iRoundResult = RoundFloat(fResult);
-	return iRoundResult;
-}
-
-public int CalculatePointsTop10(int cvAmount, int style, int place) {
-	float fResult = (cvAmount * g_iTier )* Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
-	float fResult1 = fResult - (cvAmount / place);
-	int iRoundResult = RoundFloat(fResult1);
-	return iRoundResult;
-}
-
-public int CalculatePointsTop10Bonus(int cvAmount, int style, int place) {
-	float fResult = cvAmount * Shavit_GetStyleSettingFloat(style, "rankingmultiplier");
-	float fResult1 = fResult - (cvAmount / place);
-	int iRoundResult = RoundFloat(fResult1);
 	return iRoundResult;
 }
