@@ -6,7 +6,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.4.7"
+#define PLUGIN_VERSION "1.4.8"
 chatstrings_t gS_ChatStrings;
 
 public Plugin myinfo =
