@@ -14,10 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup SourcePawn Compiler
-      uses: https://github.com/rumblefrog/setup-sp@master
+      uses: rumblefrog/setup-sp@master
       with:
         version: "1.11.x"
-        GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
 
     - name: Compiling shavit-credits.sp
       run: |
