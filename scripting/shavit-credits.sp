@@ -83,13 +83,6 @@ public void OnPluginStart() {
 	g_cvBPbAmountAgain = new Convar("credits_amount_pb_bonus_again", "5.0", "How many point should be given for breaking the own Personal Best Again?", 0, true, 1.0, false);
 	g_cvTasEnabled = new Convar("credits_tas_enabled", "0", "Enable Store Credits for a TAS Style?", 0, true, 0.0, true, 1.0);
 	g_cvNewCalc = new Convar("credits_new_calculation", "1", "Enable the New Calculation for the credits?", 0, true, 0.0, true, 1.0);
-	g_cvTop10Enabled = new Convar("credits_top10_enabled", "1", "Enable Store credits given for being in the Top10 of a map?", 0, true, 0.0, true, 1.0);
-	g_cvTop10Amount = new Convar("credits_top10_amunt", "10", "How many points should be given for the First Place any other one will be devided through his own place.", 0, true, 1.0, false);
-	g_cvTop10AmountAgain = new Convar("credits_top10_amunt_again", "5", "How many points should be given for the First Place any other one will be devided through his own place again.", 0, true, 1.0, false);
-	g_cvBonusTop10Enabled = new Convar("credits_top10_enabled", "1", "Enable Store credits given for being in the Top10 of a map?", 0, true, 0.0, true, 1.0);
-	g_cvBonusTop10Amount = new Convar("credits_top10_amunt", "10", "How many points should be given for the First Place any other one will be devided through his own place.", 0, true, 1.0, false);
-	g_cvBonusTop10AmountAgain = new Convar("credits_top10_amunt_again", "5", "How many points should be given for the First Place any other one will be devided through his own place again.", 0, true, 1.0, false);
-
 	Convar.CreateConfig("shavit-credits");  
 }
 
