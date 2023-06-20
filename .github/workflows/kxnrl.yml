@@ -1,6 +1,7 @@
 on:
   push:
-    branches: kxnrl
+    branches: 
+      - kxnrl
 
 jobs:
   Build:
