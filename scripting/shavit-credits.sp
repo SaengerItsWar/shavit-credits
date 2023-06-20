@@ -162,7 +162,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					{
 						iCredits = g_cvNormalAmount.IntValue * g_iTier;
 					}
-					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map");
 
 					Shavit_PrintToChat(client, "%t", "NormalFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				} else if (g_iCompletions[client] >=1) {
@@ -174,7 +174,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 						iCredits = g_cvNormalAmountAgain.IntValue * g_iTier;
 					}
 
-					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map again");
 
 					Shavit_PrintToChat(client, "%t", "NormalFinishAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				}
@@ -192,7 +192,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 						iCredits = g_cvNormalBAmount.IntValue;
 				}
 
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map Bonus");
 				Shavit_PrintToChat(client, "%t", "NormalBonusFinish", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			} else if (g_iCompletions[client] >=1) {
 				int iCredits;
@@ -202,7 +202,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					iCredits = g_cvNormalBAmountAgain.IntValue;
 				}
 				
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "finishing map Bonus Again");
 				Shavit_PrintToChat(client, "%t", "NormalBonusFinishAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 		}
@@ -219,7 +219,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 						iCredits = g_cvPBAmount.IntValue * g_iTier;
 					}
 					
-					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Personal Best");
 					Shavit_PrintToChat(client, "%t", "PersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				} else if (g_iCompletions[client] >=1) {
 					int iCredits;
@@ -230,7 +230,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 						iCredits = g_cvPBAmountAgain.IntValue * g_iTier;
 					}
 					
-					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Personal Best Again");
 					Shavit_PrintToChat(client, "%t", "PersonalBestAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				}
 			}
@@ -248,7 +248,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 						iCredits = g_cvBPbAmount.IntValue;
 					}
 					
-					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Personal Best Bonus");
 					Shavit_PrintToChat(client, "%t", "BonusPersonalBest", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				} else if (g_iCompletions[client] >=1) {
 					int iCredits;
@@ -258,7 +258,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 						iCredits = g_cvBPbAmountAgain.IntValue;
 					}
 					
-					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+					Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Personal Best Bonus Again");
 					Shavit_PrintToChat(client, "%t", "BonusPersonalBestAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				}
 			}
@@ -279,7 +279,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					iCredits = RoundFloat(fCredits);
 				}
 
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Top 10 Finish");
 				Shavit_PrintToChat(client, "%t", "NormalTop10", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			} else if (g_iCompletions[client] >= 1){
 				int iCredits;
@@ -289,7 +289,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					float fCredits = (g_cvTop10AmountAgain.IntValue / place);
 					iCredits = RoundFloat(fCredits);
 				}
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Top 10 Finish Again");
 				Shavit_PrintToChat(client, "%t", "NormalTop10Again", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 		}
@@ -308,7 +308,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					float fCredits = (g_cvBonusTop10Amount.IntValue / place);
 					iCredits = RoundFloat(fCredits);
 				}
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Top 10 Bonus Finish");
 				Shavit_PrintToChat(client, "%t", "BonusTop10", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			} else if (g_iCompletions[client] >= 1){
 				int iCredits;
@@ -318,7 +318,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 					float fCredits = (g_cvBonusTop10AmountAgain.IntValue / place);
 					iCredits = RoundFloat(fCredits);
 				}
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "Top 10 Bonus Finish Again");
 				Shavit_PrintToChat(client, "%t", "BonusTop10Again", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 		}
@@ -346,7 +346,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 					iCredits = g_cvWrAmount.IntValue * g_iTier;
 				}
 
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking map record");
 				Shavit_PrintToChat(client, "%t", "WorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			} else if (g_iCompletions[client] >=1) {
 				int iCredits;
@@ -356,7 +356,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 					iCredits = g_cvWrAmountAgain.IntValue * g_iTier;
 				}
 
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking map record Again");
 				Shavit_PrintToChat(client, "%t", "WorldRecordAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
 		}
@@ -372,7 +372,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 					iCredits = g_cvWrBAmount.IntValue;
 				}
 
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking Bonus record");
 
 				Shavit_PrintToChat(client, "%t", "BonusWorldRecord", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			} else if (g_iCompletions[client] >=1) {
@@ -383,7 +383,7 @@ public void Shavit_OnWorldRecord(int client, int style, float time, int jumps, i
 					iCredits = g_cvWrBAmountAgain.IntValue;
 				}
 
-				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits);
+				Store_SetClientCredits(client, Store_GetClientCredits(client) + iCredits, "breaking Bonus record Again");
 
 				Shavit_PrintToChat(client, "%t", "BonusWorldRecordAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 			}
