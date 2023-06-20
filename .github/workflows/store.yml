@@ -1,6 +1,7 @@
 on:
   push:
-    branches: store
+    branches:
+      - store
     
 jobs:
   Build:
