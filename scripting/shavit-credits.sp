@@ -6,7 +6,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.5.0"
+#define PLUGIN_VERSION "1.4.7"
 chatstrings_t gS_ChatStrings;
 
 public Plugin myinfo = {
@@ -39,12 +39,6 @@ Convar g_cvBPbAmount;
 Convar g_cvBPbAmountAgain;
 Convar g_cvTasEnabled;
 Convar g_cvNewCalc;
-Convar g_cvTop10Enabled;
-Convar g_cvTop10Amount;
-Convar g_cvTop10AmountAgain;
-Convar g_cvBonusTop10Enabled;
-Convar g_cvBonusTop10Amount;
-Convar g_cvBonusTop10AmountAgain;
 
 //globals
 char g_cMap[160];
