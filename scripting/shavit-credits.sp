@@ -163,7 +163,7 @@ public void Shavit_OnFinish(int client, int style, float time, int jumps, int st
 						iCredits = g_cvNormalAmountAgain.IntValue * g_iTier;
 					}
 
-					Store_GiveCredits(accountId, iCredits);;
+					Store_GiveCredits(accountId, iCredits);
 
 					Shavit_PrintToChat(client, "%t", "NormalFinishAgain", gS_ChatStrings.sVariable, iCredits, gS_ChatStrings.sText);
 				}
